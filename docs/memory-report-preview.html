@@ -1,0 +1,3653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>图书馆大学四年记忆盘点</title>
+  <style>
+    :root {
+      --paper: #f2e4c8;
+      --paper-deep: #d8c29b;
+      --ink: #221b14;
+      --muted: #725f46;
+      --red: #b2211d;
+      --red-dark: #7d1714;
+      --green: #365c42;
+      --blue: #234f72;
+      --amber: #d88421;
+      --black: #11100e;
+      --line: rgba(34, 27, 20, 0.18);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-top: env(safe-area-inset-top, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        #201812;
+      background-size: 18px 18px, 24px 24px, auto;
+      font-family: "Segoe UI", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .h5-frame {
+      position: relative;
+      width: min(100%, 430px);
+      height: 100svh;
+      margin: 0 auto;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 30px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    .h5-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        linear-gradient(115deg, transparent 0 46%, rgba(125, 23, 20, 0.18) 47% 48%, transparent 49%),
+        repeating-linear-gradient(0deg, rgba(34, 27, 20, 0.08) 0 1px, transparent 1px 5px);
+      mix-blend-mode: multiply;
+    }
+
+    .slides {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      transition: transform 640ms cubic-bezier(0.19, 1, 0.22, 1);
+      will-change: transform;
+    }
+
+    .slide {
+      position: relative;
+      height: 100svh;
+      padding: calc(62px + var(--safe-top)) 18px calc(34px + var(--safe-bottom));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255, 249, 233, 0.78), rgba(221, 198, 157, 0.88)),
+        var(--paper);
+    }
+
+    .slide.hidden {
+      display: none;
+    }
+
+    .slide.dark {
+      color: #efe2c6;
+      background:
+        linear-gradient(180deg, rgba(27, 22, 17, 0.94), rgba(14, 13, 12, 0.98)),
+        #171310;
+    }
+
+    .slide.receipt-bg {
+      justify-content: center;
+      background:
+        linear-gradient(180deg, #242018, #12100d);
+    }
+
+    .kicker {
+      margin: 0 0 12px;
+      color: var(--red);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .dark .kicker {
+      color: #ffb35a;
+    }
+
+    .title {
+      margin: 0;
+      font-family: "SimSun", "Songti SC", serif;
+      font-size: 2.15rem;
+      line-height: 1.08;
+      font-weight: 900;
+    }
+
+    .title.small {
+      font-size: 1.65rem;
+    }
+
+    .copy {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .dark .copy {
+      color: rgba(239, 226, 198, 0.72);
+    }
+
+    .panel {
+      position: relative;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 248, 230, 0.7);
+      box-shadow: 0 12px 30px rgba(45, 32, 18, 0.12);
+    }
+
+    .dark .panel {
+      border-color: rgba(255, 179, 90, 0.22);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: none;
+    }
+
+    .mono {
+      font-family: "Consolas", "SFMono-Regular", monospace;
+    }
+
+    .top-tools {
+      position: absolute;
+      z-index: 10;
+      top: calc(12px + var(--safe-top));
+      right: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .top-tools.left {
+      left: 12px;
+      right: auto;
+      align-items: center;
+    }
+
+    .track-label {
+      max-width: 156px;
+      padding: 7px 10px;
+      border: 1px solid rgba(34, 27, 20, 0.22);
+      border-radius: 999px;
+      color: rgba(34, 27, 20, 0.72);
+      background: rgba(242, 228, 200, 0.72);
+      backdrop-filter: blur(8px);
+      font-size: 0.68rem;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .auto-progress {
+      position: absolute;
+      z-index: 9;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .auto-progress i {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #ffcf6e, #e94b35);
+      transition: width 180ms linear;
+    }
+
+    .tool-btn {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(34, 27, 20, 0.28);
+      border-radius: 999px;
+      background: rgba(242, 228, 200, 0.72);
+      backdrop-filter: blur(8px);
+    }
+
+    .vinyl {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, var(--paper) 0 12%, transparent 13%),
+        radial-gradient(circle, #1a1715 0 45%, #3b3028 46% 55%, #171310 56%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+    }
+
+    .tool-btn.is-playing .vinyl {
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .nav-arrow {
+      position: absolute;
+      z-index: 8;
+      left: 50%;
+      bottom: calc(12px + var(--safe-bottom));
+      width: 24px;
+      height: 24px;
+      margin-left: -12px;
+      color: currentColor;
+      opacity: 0.65;
+      animation: arrow 1.8s ease-in-out infinite;
+    }
+
+    .nav-arrow::before,
+    .nav-arrow::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      width: 14px;
+      height: 2px;
+      background: currentColor;
+    }
+
+    .nav-arrow::before {
+      left: 1px;
+      transform: rotate(42deg);
+    }
+
+    .nav-arrow::after {
+      right: 1px;
+      transform: rotate(-42deg);
+    }
+
+    @keyframes arrow {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .loading-scene {
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      text-align: center;
+      color: #efe2c6;
+      background:
+        linear-gradient(180deg, rgba(12, 13, 13, 0.82), rgba(5, 6, 7, 0.98)),
+        #0e0e0d;
+    }
+
+    .guard {
+      position: relative;
+      width: 136px;
+      height: 132px;
+      image-rendering: pixelated;
+    }
+
+    .guard-body {
+      position: absolute;
+      left: 44px;
+      top: 24px;
+      width: 50px;
+      height: 74px;
+      background: #2e5d46;
+      box-shadow:
+        0 -18px 0 #d7a86a,
+        12px -24px 0 #26201a,
+        -12px 0 0 #294b3b,
+        0 74px 0 #171310,
+        24px 74px 0 #171310;
+    }
+
+    .guard-light {
+      position: absolute;
+      left: 84px;
+      top: 42px;
+      width: 16px;
+      height: 12px;
+      background: #c7b36c;
+      transform-origin: left center;
+      animation: scan 2.4s ease-in-out infinite;
+    }
+
+    .guard-light::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      top: -18px;
+      width: 94px;
+      height: 48px;
+      background: linear-gradient(90deg, rgba(255, 231, 132, 0.45), transparent);
+      clip-path: polygon(0 38%, 100% 0, 100% 100%, 0 62%);
+    }
+
+    @keyframes scan {
+      0%, 100% {
+        transform: rotate(-8deg);
+      }
+      50% {
+        transform: rotate(12deg);
+      }
+    }
+
+    .progress {
+      width: min(270px, 82%);
+      height: 8px;
+      padding: 1px;
+      border: 1px solid rgba(239, 226, 198, 0.32);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .progress i {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: #ffb35a;
+      transition: width 180ms linear;
+    }
+
+    .cover-archive {
+      margin-top: 60px;
+      padding: 18px;
+      border: 2px solid var(--ink);
+      background:
+        linear-gradient(90deg, rgba(34, 27, 20, 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(34, 27, 20, 0.06) 1px, transparent 1px);
+      background-size: 12px 12px;
+    }
+
+    .archive-code {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 42px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .big-number {
+      margin: 18px 0 0;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 3.2rem;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--red);
+    }
+
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .stats-strip div {
+      min-height: 76px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.26);
+    }
+
+    .stats-strip span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .stats-strip strong {
+      display: block;
+      margin-top: 8px;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 1.15rem;
+    }
+
+    .truth-card {
+      min-height: 230px;
+      transform-style: preserve-3d;
+      transition: transform 520ms ease;
+    }
+
+    .truth-card.is-revealed {
+      transform: rotateY(180deg);
+    }
+
+    .truth-face {
+      position: absolute;
+      inset: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      backface-visibility: hidden;
+    }
+
+    .truth-back {
+      transform: rotateY(180deg);
+    }
+
+    .red-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 2px solid var(--red);
+      border-radius: 8px;
+      background: var(--red);
+      color: #fff7e8;
+      font-weight: 900;
+      box-shadow: 4px 4px 0 rgba(34, 27, 20, 0.24);
+    }
+
+    .stamp {
+      display: inline-grid;
+      place-items: center;
+      width: 132px;
+      height: 132px;
+      border: 6px solid var(--red);
+      border-radius: 50%;
+      color: var(--red);
+      font-size: 1.35rem;
+      font-weight: 900;
+      transform: rotate(-13deg);
+      opacity: 0;
+    }
+
+    .truth-card.is-revealed .stamp,
+    .slide.is-active .receipt-stamp {
+      animation: stampIn 360ms cubic-bezier(0.2, 1.5, 0.4, 1) forwards;
+    }
+
+    @keyframes stampIn {
+      from {
+        opacity: 0;
+        transform: scale(1.5) rotate(-13deg);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(-13deg);
+      }
+    }
+
+    .territory-board {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .territory-hero {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 10px;
+      align-items: stretch;
+      padding: 10px;
+      border: 1px solid rgba(255, 179, 90, 0.32);
+      border-radius: 8px;
+      background: rgba(255, 179, 90, 0.08);
+    }
+
+    .territory-gauge {
+      --coverage: 0;
+      position: relative;
+      min-height: 88px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at center, #171310 0 56%, transparent 57%),
+        conic-gradient(#ffb35a calc(var(--coverage) * 1%), rgba(255, 255, 255, 0.08) 0);
+    }
+
+    .territory-gauge strong {
+      color: #fff0cc;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 1.48rem;
+      line-height: 1;
+    }
+
+    .territory-gauge span {
+      display: block;
+      margin-top: 5px;
+      color: rgba(239, 226, 198, 0.66);
+      font-size: 0.64rem;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .territory-main {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .territory-main .kicker {
+      margin-bottom: 6px;
+      font-size: 0.68rem;
+    }
+
+    .territory-main strong {
+      display: block;
+      color: #fff0cc;
+      font-size: 0.93rem;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .territory-main p {
+      margin: 6px 0 0;
+      color: rgba(239, 226, 198, 0.7);
+      font-size: 0.74rem;
+      line-height: 1.45;
+    }
+
+    .floor-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .floor-row {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr);
+      gap: 6px;
+      padding: 6px;
+      border: 1px solid rgba(255, 179, 90, 0.22);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .floor-row.is-top {
+      grid-column: 1 / -1;
+      background: rgba(255, 179, 90, 0.12);
+    }
+
+    .floor-rank {
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      color: #171310;
+      background: #ffb35a;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    .floor-body {
+      min-width: 0;
+    }
+
+    .floor-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .floor-head strong {
+      min-width: 0;
+      color: rgba(239, 226, 198, 0.9);
+      font-size: 0.72rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .floor-head span {
+      color: #ffb35a;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    .floor-track {
+      height: 5px;
+      margin-top: 4px;
+      overflow: hidden;
+      background: rgba(239, 226, 198, 0.12);
+    }
+
+    .floor-track i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #ffcf6e, #e94b35);
+    }
+
+    .floor-foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 3px;
+      color: rgba(239, 226, 198, 0.58);
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 0.62rem;
+    }
+
+    .bubble {
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 179, 90, 0.32);
+      border-radius: 8px;
+      color: #ffe3b0;
+      background: rgba(255, 179, 90, 0.08);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .chart-box {
+      margin-top: 18px;
+      padding: 14px 10px 10px;
+      border: 1px solid rgba(255, 77, 66, 0.28);
+      border-radius: 8px;
+      background: rgba(255, 77, 66, 0.04);
+    }
+
+    .chart-box svg {
+      display: block;
+      width: 100%;
+      height: 220px;
+      overflow: visible;
+    }
+
+    .chart-line {
+      fill: none;
+      stroke: #ff4d42;
+      stroke-width: 4;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 10px rgba(255, 77, 66, 0.55));
+      stroke-dasharray: 900;
+      stroke-dashoffset: 900;
+    }
+
+    .slide.is-active .chart-line {
+      animation: drawLine 1200ms ease forwards;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(20px) scale(0.985);
+      filter: blur(5px);
+      will-change: opacity, transform, filter;
+    }
+
+    .slide.is-active [data-reveal].is-revealed {
+      animation: revealPop 1080ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .slide.is-active [data-reveal].is-revealed.reveal-strong {
+      animation-name: revealBounce;
+      animation-duration: 1220ms;
+    }
+
+    @keyframes revealPop {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes revealBounce {
+      0% {
+        opacity: 0;
+        transform: translateY(24px) scale(0.92);
+        filter: blur(7px);
+      }
+      70% {
+        opacity: 1;
+        transform: translateY(-3px) scale(1.015);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .reveal-done [data-reveal] {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+
+    @keyframes drawLine {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .chart-axis {
+      stroke: rgba(239, 226, 198, 0.24);
+      stroke-width: 1;
+    }
+
+    .chart-label {
+      fill: rgba(239, 226, 198, 0.7);
+      font-size: 11px;
+    }
+
+    .ecg-board {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .alert-strip {
+      display: grid;
+      grid-template-columns: 1.15fr repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .alert-card {
+      min-width: 0;
+      min-height: 72px;
+      padding: 10px;
+      border: 1px solid rgba(255, 77, 66, 0.28);
+      border-radius: 8px;
+      background: rgba(255, 77, 66, 0.075);
+    }
+
+    .alert-card.is-level {
+      display: grid;
+      place-items: center;
+      border-color: rgba(255, 179, 90, 0.36);
+      background: rgba(255, 179, 90, 0.12);
+      text-align: center;
+    }
+
+    .alert-card span {
+      display: block;
+      color: rgba(239, 226, 198, 0.62);
+      font-size: 0.64rem;
+      font-weight: 800;
+    }
+
+    .alert-card strong {
+      display: block;
+      margin-top: 6px;
+      color: #fff0cc;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 1.02rem;
+      line-height: 1.1;
+    }
+
+    .alert-card.is-level strong {
+      color: #ffb35a;
+      font-family: "Segoe UI", "Microsoft YaHei UI", sans-serif;
+      font-size: 1.1rem;
+    }
+
+    .ecg-panel {
+      padding: 10px 8px 8px;
+      border: 1px solid rgba(255, 77, 66, 0.28);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(255, 77, 66, 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 77, 66, 0.08) 1px, transparent 1px),
+        rgba(255, 77, 66, 0.035);
+      background-size: 18px 18px;
+    }
+
+    .ecg-panel svg {
+      display: block;
+      width: 100%;
+      height: 170px;
+      overflow: visible;
+    }
+
+    .ecg-area {
+      fill: rgba(255, 77, 66, 0.11);
+      stroke: none;
+    }
+
+    .ecg-dot {
+      fill: #ffb35a;
+      stroke: #171310;
+      stroke-width: 1.5;
+    }
+
+    .ecg-peak-label {
+      fill: #ffcf6e;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .exam-pulses {
+      display: grid;
+      gap: 6px;
+    }
+
+    .exam-pulse {
+      display: grid;
+      grid-template-columns: 72px 1fr 68px;
+      gap: 8px;
+      align-items: center;
+      min-height: 36px;
+      padding: 7px 8px;
+      border: 1px solid rgba(255, 179, 90, 0.2);
+      border-radius: 8px;
+      color: rgba(239, 226, 198, 0.82);
+      background: rgba(255, 255, 255, 0.045);
+      font-size: 0.76rem;
+    }
+
+    .exam-pulse strong {
+      color: #fff0cc;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 0.78rem;
+    }
+
+    .exam-track {
+      height: 7px;
+      overflow: hidden;
+      background: rgba(239, 226, 198, 0.12);
+    }
+
+    .exam-track i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #ffcf6e, #ff4d42);
+    }
+
+    .curve-copy {
+      margin-top: 14px;
+      padding-left: 12px;
+      border-left: 4px solid var(--red);
+      line-height: 1.65;
+    }
+
+    .diagnosis-wrap {
+      position: relative;
+      padding: 18px 12px;
+    }
+
+    .receipt {
+      position: relative;
+      width: min(100%, 350px);
+      margin: 0 auto;
+      padding: 12px 15px 16px;
+      border-radius: 8px;
+      color: #16120f;
+      background:
+        repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.035) 0 1px, transparent 1px 4px),
+        #efe1c1;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+    }
+
+    .receipt::before,
+    .receipt::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background:
+        linear-gradient(135deg, transparent 8px, #efe1c1 0) left,
+        linear-gradient(225deg, transparent 8px, #efe1c1 0) right;
+      background-size: 16px 10px;
+      background-repeat: repeat-x;
+    }
+
+    .receipt::before {
+      top: -10px;
+    }
+
+    .receipt::after {
+      bottom: -10px;
+      transform: rotate(180deg);
+    }
+
+    .barcode {
+      height: 32px;
+      margin-bottom: 6px;
+      background:
+        linear-gradient(90deg, #111 0 3px, transparent 3px 6px, #111 6px 8px, transparent 8px 14px, #111 14px 20px, transparent 20px 22px, #111 22px 24px, transparent 24px 30px, #111 30px 36px, transparent 36px 41px, #111 41px 43px, transparent 43px 49px);
+      background-size: 58px 32px;
+    }
+
+    .receipt-head {
+      border-top: 2px dashed rgba(22, 18, 15, 0.45);
+      border-bottom: 2px dashed rgba(22, 18, 15, 0.45);
+      padding: 8px 0;
+      text-align: center;
+      font-weight: 900;
+      font-size: 0.88rem;
+    }
+
+    .receipt-stamp {
+      margin: 12px auto 6px;
+      width: 190px;
+      min-height: 68px;
+      place-items: center;
+      border: 6px solid var(--red);
+      color: var(--red);
+      font-size: 1.34rem;
+      font-weight: 900;
+      transform: rotate(-6deg);
+      opacity: 0;
+      text-align: center;
+    }
+
+    .diagnosis {
+      margin: 12px 0 0;
+      line-height: 1.48;
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+
+    .tag-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tag-pill {
+      max-width: 100%;
+      padding: 4px 6px;
+      border: 1px solid rgba(178, 33, 29, 0.35);
+      border-radius: 6px;
+      color: var(--red);
+      background: rgba(178, 33, 29, 0.06);
+      font-size: 0.68rem;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(22, 18, 15, 0.25);
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 0.82rem;
+    }
+
+    .receipt-row.is-long {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      align-items: start;
+    }
+
+    .receipt-row.is-long strong {
+      text-align: right;
+      overflow-wrap: anywhere;
+      line-height: 1.25;
+    }
+
+    .receipt-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .receipt-actions .red-action {
+      flex: 1;
+      min-height: 38px;
+      padding: 0 8px;
+      font-size: 0.78rem;
+    }
+
+    .annual-list {
+      display: grid;
+      gap: 5px;
+      margin-top: 6px;
+    }
+
+    .annual-card {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 7px;
+      padding: 7px;
+      border: 1px solid rgba(34, 27, 20, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .annual-year {
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--red);
+      color: var(--red);
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-weight: 900;
+    }
+
+    .annual-main {
+      min-width: 0;
+    }
+
+    .annual-main strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 0.84rem;
+    }
+
+    .annual-main .mono {
+      font-size: 0.76rem;
+      line-height: 1.25;
+    }
+
+    .annual-main p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 0.66rem;
+      line-height: 1.22;
+    }
+
+    .annual-meter {
+      height: 6px;
+      margin-top: 5px;
+      overflow: hidden;
+      background: rgba(34, 27, 20, 0.12);
+    }
+
+    .annual-meter i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--amber));
+    }
+
+    .spotlight-card {
+      position: relative;
+      padding: 18px;
+      border: 1px solid rgba(34, 27, 20, 0.18);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.16)),
+        rgba(255, 248, 230, 0.66);
+      overflow: hidden;
+    }
+
+    .dark .spotlight-card {
+      border-color: rgba(255, 179, 90, 0.28);
+      background:
+        linear-gradient(135deg, rgba(255, 179, 90, 0.13), rgba(255, 255, 255, 0.04)),
+        rgba(255, 255, 255, 0.04);
+    }
+
+    .spotlight-card::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -70px;
+      width: 180px;
+      height: 180px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      opacity: 0.12;
+    }
+
+    .spot-label {
+      color: var(--red);
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
+
+    .dark .spot-label {
+      color: #ffb35a;
+    }
+
+    .spot-number {
+      margin: 12px 0 4px;
+      color: var(--red);
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 3.25rem;
+      line-height: 0.95;
+      font-weight: 900;
+    }
+
+    .dark .spot-number {
+      color: #ffcf6e;
+    }
+
+    .spot-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .focus-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .summary-tile {
+      min-height: 78px;
+      padding: 10px;
+      border: 1px solid rgba(34, 27, 20, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .dark .summary-tile {
+      border-color: rgba(255, 179, 90, 0.2);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .summary-tile span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.66rem;
+      font-weight: 900;
+    }
+
+    .dark .summary-tile span {
+      color: rgba(239, 226, 198, 0.62);
+    }
+
+    .summary-tile strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--red);
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 1.1rem;
+      overflow-wrap: anywhere;
+    }
+
+    .dark .summary-tile strong {
+      color: #ffcf6e;
+    }
+
+    .summary-tile p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.7rem;
+      line-height: 1.35;
+    }
+
+    .dark .summary-tile p {
+      color: rgba(239, 226, 198, 0.68);
+    }
+
+    .month-wall {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .heat-row {
+      display: grid;
+      grid-template-columns: 44px repeat(12, 1fr);
+      gap: 4px;
+      align-items: center;
+    }
+
+    .heat-year {
+      color: rgba(239, 226, 198, 0.72);
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 0.72rem;
+    }
+
+    .heat-cell {
+      position: relative;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 179, 90, 0.16);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .heat-cell i {
+      position: absolute;
+      inset: 0;
+      opacity: calc(0.18 + var(--level) * 0.82);
+      background: linear-gradient(180deg, #ffcf6e, #e94b35);
+    }
+
+    .heat-cell span {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 248, 230, 0.82);
+      font-size: 0.52rem;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .top-months {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .top-month {
+      display: grid;
+      grid-template-columns: 72px 1fr 58px;
+      gap: 10px;
+      align-items: center;
+      color: rgba(239, 226, 198, 0.88);
+      font-size: 0.82rem;
+    }
+
+    .top-track {
+      height: 7px;
+      overflow: hidden;
+      background: rgba(239, 226, 198, 0.13);
+    }
+
+    .top-track i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #ffcf6e, #e94b35);
+    }
+
+    .semester-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .semester-card {
+      min-height: 72px;
+      padding: 7px;
+      border: 1px solid rgba(34, 27, 20, 0.15);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .semester-card.is-crossroad {
+      border-color: rgba(178, 33, 29, 0.62);
+      background: rgba(178, 33, 29, 0.08);
+    }
+
+    .semester-card.is-empty {
+      opacity: 0.58;
+    }
+
+    .semester-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .semester-label {
+      font-weight: 900;
+      font-size: 0.96rem;
+    }
+
+    .semester-tag {
+      padding: 2px 5px;
+      border: 1px solid rgba(178, 33, 29, 0.36);
+      border-radius: 4px;
+      color: var(--red);
+      font-size: 0.56rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .semester-main {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      margin-top: 4px;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+    }
+
+    .semester-main strong {
+      color: var(--red);
+      font-size: 0.98rem;
+    }
+
+    .semester-main span {
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .semester-card p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 0.6rem;
+      line-height: 1.18;
+    }
+
+    .phase-note,
+    .crossroad-verdict {
+      margin-top: 12px;
+      padding-left: 12px;
+      border-left: 4px solid var(--red);
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .dark .phase-note,
+    .dark .crossroad-verdict {
+      color: rgba(239, 226, 198, 0.76);
+      border-color: #ffb35a;
+    }
+
+    .crossroad-board {
+      display: grid;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .cross-card {
+      padding: 12px;
+      border: 1px solid rgba(255, 179, 90, 0.26);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .cross-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .cross-head strong {
+      font-size: 1.05rem;
+    }
+
+    .cross-head span {
+      color: #ffb35a;
+      font-size: 0.74rem;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .cross-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .cross-metrics div,
+    .signal-card {
+      min-width: 0;
+      padding: 8px;
+      border: 1px solid rgba(255, 179, 90, 0.18);
+      background: rgba(255, 179, 90, 0.07);
+    }
+
+    .cross-metrics span,
+    .signal-card span {
+      display: block;
+      color: rgba(239, 226, 198, 0.62);
+      font-size: 0.62rem;
+    }
+
+    .cross-metrics strong,
+    .signal-card strong {
+      display: block;
+      margin-top: 4px;
+      color: #fff0cc;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 0.88rem;
+      overflow-wrap: anywhere;
+    }
+
+    .cross-card p {
+      margin: 9px 0 0;
+      color: rgba(239, 226, 198, 0.74);
+      font-size: 0.76rem;
+      line-height: 1.48;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .signal-card {
+      min-height: 72px;
+    }
+
+    .low-card {
+      border: 2px dashed rgba(178, 33, 29, 0.45);
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .low-chart {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .low-chart div {
+      min-height: 120px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 900;
+      background: #e8d5ad;
+    }
+
+    .low-chart div:first-child {
+      background: #af2a24;
+      color: #fff5df;
+    }
+
+    .hakimi-panel {
+      display: grid;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .hakimi-status {
+      display: inline-flex;
+      width: fit-content;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #fff4df;
+      background: rgba(178, 33, 29, 0.82);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .hakimi-stream {
+      max-height: min(43svh, 374px);
+      min-height: 250px;
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid rgba(239, 226, 198, 0.16);
+      border-radius: 8px;
+      color: #fff4df;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        rgba(0, 0, 0, 0.18);
+      font-size: 0.94rem;
+      font-weight: 850;
+      line-height: 1.76;
+      overflow-wrap: anywhere;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12);
+    }
+
+    .hakimi-stream h3 {
+      margin: 0 0 8px;
+      color: #ffe1a8;
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    .hakimi-stream p {
+      margin: 0 0 10px;
+      color: #fff4df;
+    }
+
+    .hakimi-stream ul {
+      margin: 0 0 10px;
+      padding-left: 1.1em;
+    }
+
+    .hakimi-stream li {
+      margin: 0 0 5px;
+    }
+
+    .hakimi-stream strong {
+      color: #ffd37a;
+      font-weight: 950;
+    }
+
+    .hakimi-stream .hakimi-hit {
+      margin-top: 12px;
+      padding: 10px 11px;
+      border-left: 4px solid #f05a3d;
+      border-radius: 8px;
+      color: #ffe9c2;
+      background: rgba(178, 33, 29, 0.22);
+      font-weight: 950;
+      line-height: 1.58;
+    }
+
+    .hakimi-stream .hakimi-blessing {
+      margin-top: 12px;
+      padding: 11px 12px;
+      border: 1px solid rgba(255, 211, 122, 0.32);
+      border-radius: 8px;
+      color: #ffe9c2;
+      background: rgba(255, 211, 122, 0.12);
+      font-weight: 920;
+      line-height: 1.64;
+    }
+
+    .hakimi-punchline {
+      margin: 0;
+      padding: 12px 13px;
+      border-left: 4px solid #f05a3d;
+      border-radius: 8px;
+      color: #ffe9c2;
+      background: rgba(178, 33, 29, 0.2);
+      font-size: 0.92rem;
+      font-weight: 900;
+      line-height: 1.58;
+    }
+
+    .hakimi-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .rank-board {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 48px;
+      padding: 9px 10px;
+      border: 1px solid rgba(34, 27, 20, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.34);
+    }
+
+    .rank-row.is-me {
+      border-color: rgba(178, 33, 29, 0.42);
+      background: rgba(178, 33, 29, 0.08);
+    }
+
+    .rank-row b {
+      color: var(--red);
+      font-family: "Consolas", "SFMono-Regular", monospace;
+    }
+
+    .rank-row strong {
+      display: block;
+      font-size: 0.9rem;
+      overflow-wrap: anywhere;
+    }
+
+    .rank-row span {
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .rank-row em {
+      font-style: normal;
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .share-link {
+      margin: 4px 0 0;
+      color: rgba(239, 226, 198, 0.72);
+      font-size: 0.62rem;
+      line-height: 1.28;
+      overflow-wrap: anywhere;
+    }
+
+    .receipt-actions {
+      flex-wrap: wrap;
+    }
+
+    .red-action.secondary-action {
+      border-color: rgba(178, 33, 29, 0.72);
+      color: var(--red);
+      background: rgba(255, 255, 255, 0.45);
+      box-shadow: none;
+    }
+
+    .slide[data-slide="annual-summary"],
+    .slide[data-slide="semester-summary"] {
+      padding-top: calc(54px + var(--safe-top));
+    }
+
+    .slide[data-slide="annual-summary"] header .title,
+    .slide[data-slide="semester-summary"] header .title {
+      font-size: 1.48rem;
+    }
+
+    .slide[data-slide="annual-summary"] header .copy,
+    .slide[data-slide="semester-summary"] header .copy {
+      margin-top: 8px;
+      font-size: 0.86rem;
+      line-height: 1.48;
+    }
+
+    .slide[data-slide="annual-summary"] .panel {
+      padding: 10px;
+    }
+
+    .slide[data-slide="semester-summary"] .phase-note {
+      display: none;
+    }
+
+    .graduation-slide {
+      padding: 0;
+      justify-content: stretch;
+      color: #173c72;
+      background: #f2d59e;
+    }
+
+    .graduation-card {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      background: #f2d59e;
+    }
+
+    .graduation-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .graduation-overlay {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: calc(24px + var(--safe-bottom));
+      padding: 14px 14px 16px;
+      border: 1px solid rgba(21, 65, 122, 0.18);
+      border-radius: 8px;
+      color: #173c72;
+      background: rgba(255, 244, 214, 0.86);
+      box-shadow: 0 16px 42px rgba(58, 38, 18, 0.2);
+    }
+
+    .graduation-overlay .kicker {
+      color: #f06d18;
+      margin-bottom: 8px;
+    }
+
+    .graduation-overlay h2 {
+      margin: 0;
+      font-family: "SimSun", "Songti SC", serif;
+      font-size: 1.75rem;
+      line-height: 1.15;
+    }
+
+    .graduation-overlay p {
+      margin: 10px 0 0;
+      color: #263954;
+      font-weight: 800;
+      line-height: 1.65;
+    }
+
+    .graduation-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      margin-top: 12px;
+      padding: 0 14px;
+      border-radius: 8px;
+      color: #fff8e7;
+      background: #f06d18;
+      font-weight: 950;
+      text-decoration: none;
+      box-shadow: 4px 4px 0 rgba(21, 65, 122, 0.16);
+    }
+
+    .export-stage {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: min(100vw, 430px);
+      background: #201812;
+      z-index: 2147483000;
+      pointer-events: none;
+    }
+
+    .export-stage .slide {
+      position: relative;
+      height: 844px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .export-stage [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+      animation: none !important;
+    }
+
+    .export-stage .nav-arrow,
+    .export-stage .top-tools,
+    .export-stage .auto-progress,
+    .export-stage audio {
+      display: none !important;
+    }
+
+    @media (min-width: 760px) {
+      .h5-frame {
+        height: min(100svh, 920px);
+        margin-top: max(0px, calc((100svh - 920px) / 2));
+      }
+
+      .slide {
+        height: min(100svh, 920px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="h5-frame" id="app">
+    <div class="auto-progress" id="autoProgress" aria-hidden="true"><i></i></div>
+    <div class="top-tools left">
+      <button class="tool-btn" id="autoBtn" aria-label="toggle auto play">▶</button>
+      <div class="track-label" id="trackLabel" role="button" tabindex="0" aria-label="切换背景音乐">音乐加载中</div>
+    </div>
+    <div class="top-tools">
+      <button class="tool-btn" id="soundBtn" aria-label="toggle sound"><span class="vinyl"></span></button>
+    </div>
+    <audio id="bgm" preload="metadata" loop></audio>
+
+    <section class="slides" id="slides">
+      <article class="slide loading-scene" data-slide="loading">
+        <div class="guard" aria-hidden="true">
+          <div class="guard-body"></div>
+          <div class="guard-light"></div>
+        </div>
+        <div>
+          <p class="kicker">HDU LIBRARY ARCHIVE</p>
+          <h1 class="title small">正在调取<br>你的四年馆藏记录</h1>
+        </div>
+        <div class="progress"><i id="loadingBar"></i></div>
+      </article>
+
+      <article class="slide" data-slide="intro">
+        <header>
+          <p class="kicker">FILE 01 / FIRST CHECK-IN</p>
+          <h1 class="title">大一的 Flag<br>和现实的拳头</h1>
+          <p class="copy" id="firstCopy"></p>
+        </header>
+
+        <section class="panel truth-card" id="truthCard">
+          <div class="truth-face">
+            <p class="kicker">OFFICIAL MEMORY</p>
+            <p class="copy" id="softTruth"></p>
+            <button class="red-action" id="truthBtn">戳破真相</button>
+          </div>
+          <div class="truth-face truth-back">
+            <div class="stamp">实话实说</div>
+            <p class="copy" id="sharpTruth"></p>
+          </div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide dark" data-slide="seat">
+        <header>
+          <p class="kicker">FILE 02 / SEAT TERRITORY</p>
+          <h2 class="title small">你的领地意识<br>先看主基地</h2>
+          <p class="copy" id="seatCopy"></p>
+        </header>
+
+        <section class="territory-board">
+          <div class="territory-hero">
+            <div class="territory-gauge" id="territoryGauge">
+              <div>
+                <strong id="territoryCoverage">0%</strong>
+                <span>行动半径</span>
+              </div>
+            </div>
+            <div class="territory-main">
+              <p class="kicker">MAIN BASE</p>
+              <strong id="seatMain"></strong>
+              <p id="seatMeta"></p>
+            </div>
+          </div>
+          <div class="bubble" id="seatBubble"></div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide dark" data-slide="seat-summary">
+        <header>
+          <p class="kicker">FILE 02B / FLOOR DATA</p>
+          <h2 class="title small">全馆足迹<br>楼层占领清单</h2>
+          <p class="copy" id="seatSummaryCopy"></p>
+        </header>
+
+        <section class="territory-board">
+          <div class="floor-board" id="floorBoard"></div>
+          <div class="bubble" id="seatSummaryRoast"></div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide dark" data-slide="peak">
+        <header>
+          <p class="kicker">FILE 03 / HEARTBEAT MODE</p>
+          <h2 class="title small">期末周签退线<br>开始报警</h2>
+          <p class="copy" id="peakCopy"></p>
+        </header>
+
+        <section class="ecg-board">
+          <div class="alert-strip">
+            <div class="alert-card is-level">
+              <span>系统判定</span>
+              <strong id="examAlert">红色预警</strong>
+            </div>
+            <div class="alert-card">
+              <span>期末季预约</span>
+              <strong id="examSessions">0 次</strong>
+            </div>
+            <div class="alert-card">
+              <span>期末季时长</span>
+              <strong id="examHours">0h</strong>
+            </div>
+          </div>
+          <div class="ecg-panel">
+            <svg id="ecgChart" viewBox="0 0 340 170" role="img" aria-label="期末季 24 小时预约心电图"></svg>
+          </div>
+          <p class="curve-copy" id="peakRoast"></p>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide dark" data-slide="peak-summary">
+        <header>
+          <p class="kicker">FILE 03B / FINAL WEEK PULSES</p>
+          <h2 class="title small">哪几个月<br>最像临时补天</h2>
+          <p class="copy" id="peakPulseCopy"></p>
+        </header>
+
+        <section class="ecg-board">
+          <div class="exam-pulses" id="examPulses"></div>
+          <p class="curve-copy" id="peakPulseRoast"></p>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide" data-slide="curve">
+        <header>
+          <p class="kicker">FILE 04 / FOUR-YEAR CURVE</p>
+          <h2 class="title small">大学四年<br>真实曲线公开处刑</h2>
+        </header>
+
+        <section class="panel">
+          <div class="big-number"><span data-count id="defeatValue">0</span>%</div>
+          <p class="copy">在当前记忆样本里，你的图书馆存在感击败了这么多人。</p>
+          <div class="chart-box" style="background: rgba(178, 33, 29, 0.05); border-color: rgba(178, 33, 29, 0.24);">
+            <svg id="yearChart" viewBox="0 0 340 220" role="img" aria-label="四年趋势图"></svg>
+          </div>
+          <p class="curve-copy" id="curveRoast"></p>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide" data-slide="annual">
+        <header>
+          <p class="kicker">FILE 05 / YEARLY PEAKS</p>
+          <h2 class="title small">每一年<br>都有一个最疯的月份</h2>
+          <p class="copy" id="annualIntro"></p>
+        </header>
+
+        <section class="spotlight-card">
+          <div class="spot-label" id="annualSpotYear">YEAR PEAK</div>
+          <div class="spot-number" id="annualSpotSessions">0</div>
+          <p class="spot-title" id="annualSpotTitle"></p>
+          <p class="copy" id="annualSpotCopy"></p>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide" data-slide="annual-summary">
+        <header>
+          <p class="kicker">FILE 05B / YEARLY SUMMARY</p>
+          <h2 class="title small">年度案卷<br>密集版总表</h2>
+          <p class="copy">这一页把每一年的峰值月份集中摆出来，适合截图复盘。</p>
+        </header>
+
+        <section class="panel">
+          <div class="annual-list" id="annualList"></div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide dark" data-slide="heatmap">
+        <header>
+          <p class="kicker">FILE 06 / MONTH HEAT WALL</p>
+          <h2 class="title small">最红月份<br>单独拎出来审判</h2>
+          <p class="copy" id="heatmapIntro"></p>
+        </header>
+
+        <section class="focus-stack">
+          <div class="spotlight-card">
+            <div class="spot-label" id="heatChampionLabel">MONTH CHAMPION</div>
+            <div class="spot-number" id="heatChampionSessions">0</div>
+            <p class="spot-title" id="heatChampionTitle"></p>
+            <p class="copy" id="heatChampionCopy"></p>
+          </div>
+          <div class="summary-grid" id="heatTopTiles"></div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide dark" data-slide="heatmap-summary">
+        <header>
+          <p class="kicker">FILE 06B / MONTH HEAT WALL</p>
+          <h2 class="title small">12 个月热力墙<br>密集版总览</h2>
+          <p class="copy">颜色越红，说明这个月越像图书馆常驻。数字是当月预约次数。</p>
+        </header>
+
+        <section>
+          <div class="month-wall" id="monthWall"></div>
+          <div class="top-months" id="topMonths"></div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide" data-slide="semester">
+        <header>
+          <p class="kicker">FILE 07 / SEMESTER ARCHIVE</p>
+          <h2 class="title small">最重学期<br>先单独点名</h2>
+          <p class="copy" id="semesterIntro"></p>
+        </header>
+
+        <section class="spotlight-card">
+          <div class="spot-label" id="semesterSpotLabel">SEMESTER PEAK</div>
+          <div class="spot-number" id="semesterSpotSessions">0</div>
+          <p class="spot-title" id="semesterSpotTitle"></p>
+          <p class="copy" id="semesterSpotCopy"></p>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide" data-slide="semester-summary">
+        <header>
+          <p class="kicker">FILE 07B / SEMESTER SUMMARY</p>
+          <h2 class="title small">八个学期<br>密集版编年史</h2>
+          <p class="copy">这里保留全部学期数据，方便你看到哪一段开始加码、哪一段彻底松弛。</p>
+        </header>
+
+        <section>
+          <div class="semester-grid" id="semesterGrid"></div>
+          <p class="phase-note" id="semesterNote"></p>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide dark" data-slide="crossroads">
+        <header>
+          <p class="kicker">FILE 08 / CROSSROADS</p>
+          <h2 class="title small">大三下和大四上<br>现实开始分叉</h2>
+          <p class="copy" id="crossroadIntro"></p>
+        </header>
+
+        <section>
+          <div class="crossroad-board" id="crossroadBoard"></div>
+          <p class="crossroad-verdict" id="crossroadVerdict"></p>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide dark" data-slide="crossroads-summary">
+        <header>
+          <p class="kicker">FILE 08B / SIGNAL SUMMARY</p>
+          <h2 class="title small">考研 / 保研 / 就业<br>信号密集表</h2>
+          <p class="copy" id="crossroadSummaryIntro"></p>
+        </header>
+
+        <section>
+          <div class="summary-grid" id="crossroadSignals"></div>
+          <p class="crossroad-verdict" id="crossroadSummaryVerdict"></p>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide" data-slide="low">
+        <header>
+          <p class="kicker">SPECIAL FILE / CLOUD SHAREHOLDER</p>
+          <h2 class="title small">你很少出现<br>但贡献巨大</h2>
+        </header>
+        <section class="panel low-card">
+          <p class="copy" id="lowCopy"></p>
+          <div class="low-chart">
+            <div>同届卷王<br><span class="mono">154320h</span></div>
+            <div>你腾出的座位<br><span class="mono" id="lowSeats">0</span> 次</div>
+          </div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide dark" data-slide="hakimi">
+        <header>
+          <p class="kicker">FILE 09 / HAKIMI AI REVIEW</p>
+          <h2 class="title small">哈基米评价<br>大模型锐评时间</h2>
+        </header>
+
+        <section class="hakimi-panel">
+          <span class="hakimi-status" id="hakimiStatus">正在连接大模型</span>
+          <div class="hakimi-stream" id="hakimiStream">正在读取你的预约画像...</div>
+          <p class="hakimi-punchline" id="hakimiPunchline">一针见血：等待模型下刀。</p>
+          <div class="hakimi-actions">
+            <button class="red-action" id="hakimiRetry" type="button">重新评价</button>
+          </div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide" data-slide="ranking">
+        <header>
+          <p class="kicker">FILE 10 / TOTAL HOURS RANKING</p>
+          <h2 class="title small">总时长排行榜<br>看看谁在馆里发电</h2>
+          <p class="copy" id="rankingIntro">按已保存或已分享报告的总时长排序。你点击分享后，也会进入这张榜单。</p>
+        </header>
+
+        <section class="panel">
+          <div class="rank-board" id="rankBoard">
+            <div class="rank-row">
+              <b>...</b>
+              <div><strong>正在加载榜单</strong><span>保存或分享报告后参与排名</span></div>
+              <em>--h</em>
+            </div>
+          </div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide receipt-bg" data-slide="receipt">
+        <section class="diagnosis-wrap">
+          <div class="receipt" id="poster">
+            <div class="barcode"></div>
+            <div class="receipt-head">
+              <div>HDU图书馆预约绝密诊断报告</div>
+              <div class="mono" id="maskId">2022****012</div>
+            </div>
+
+            <div class="receipt-stamp" id="memeTitle">人形自走卷王</div>
+            <p class="diagnosis" id="diagnosisText"></p>
+            <div class="tag-strip" id="extraTags"></div>
+
+            <div class="receipt-row"><span>肝帝指数</span><strong id="liverIndex">99%</strong></div>
+            <div class="receipt-row"><span>座位包浆度</span><strong id="seatIndex">85%</strong></div>
+            <div class="receipt-row"><span>修仙值</span><strong id="nightIndex">MAX</strong></div>
+            <div class="receipt-row is-long"><span>主战场</span><strong id="mainSeat">4F-W-023</strong></div>
+            <div class="receipt-row"><span>总时长</span><strong id="receiptHours">2048h</strong></div>
+
+            <div class="receipt-actions">
+              <button class="red-action" id="posterBtn">生成长图</button>
+              <button class="red-action secondary-action" id="shareBtn">复制分享链接</button>
+            </div>
+            <p class="share-link" id="shareLinkText"></p>
+          </div>
+        </section>
+        <div class="nav-arrow" aria-hidden="true"></div>
+      </article>
+
+      <article class="slide graduation-slide" data-slide="graduation">
+        <section class="graduation-card">
+          <img src="/assets/graduation-happy.png?v=20260620-hakimi" alt="毕业快乐" crossorigin="anonymous">
+          <div class="graduation-overlay">
+            <p class="kicker">FINAL FILE / GRADUATION</p>
+            <h2>毕业快乐<br>前程似锦</h2>
+            <p>愿你带着在图书馆留下的认真、熬过期末的勇气，以及那些只有自己懂的酸甜苦辣，奔赴下一场山海。青春不散场，未来皆可期。</p>
+            <a class="graduation-home" href="/">返回主页 / 生成我的报告</a>
+          </div>
+        </section>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const memory = {
+      user: "20220000",
+      title: "图书馆记忆 / 大学四年学习轨迹",
+      range: "2022-09-12 ~ 2026-06-19",
+      source: "图书馆后台预约历史",
+      syncTime: "2026-06-20 00:00",
+      quote: "2048 个小时并不只是数字，它更像是你在图书馆反复回到同一节奏、同一位置、同一段时间的痕迹。",
+      footerNote: "当前报告基于图书馆后台预约历史生成。",
+      summary: {
+        sessions: 647,
+        hours: 3881.78,
+        daysEquivalent: 161.74,
+        streak: 136,
+        favoriteFloor: "芯灵驿站（十二楼）",
+        favoriteSeat: "芯灵驿站（十二楼） / Seat 366",
+        favoritePeriod: "下午",
+        mostActiveMonth: "2025-06",
+        longestDayHours: 14,
+        firstVisit: "2022-09-12",
+        latestVisit: "2026-06-17"
+      },
+      metrics: [],
+      scope: [],
+      months: [
+        { label: "2024-03", sessions: 40, hours: 260 },
+        { label: "2024-09", sessions: 80, hours: 420 },
+        { label: "2025-06", sessions: 120, hours: 760 },
+        { label: "2026-06", sessions: 62, hours: 360 }
+      ],
+      periods: [],
+      favorites: [],
+      floors: [],
+      milestones: [],
+      user_profile: {
+        name: "HDU 同学",
+        student_id: "20220000",
+        student_id_mask: "2207****112"
+      },
+      meme_stats: {
+        title: "人形自走卷王",
+        title_tag: "肝帝本帝",
+        sharp_evaluation: "你不是在图书馆，就是在去图书馆的路上。建议查查肝功能，或者直接把床搬来。",
+        extra_tags: [
+          { name: "游牧学者", tag: "空间管理大师", reason: "行动范围很广。" },
+          { name: "期末补天选手", tag: "临时高压锅", reason: "后段曲线明显抬升。" }
+        ],
+        trend_type: "nuwa",
+        defeat_percentage: 98.5,
+        share_title: "经图书馆官方鉴定，我的成分是【人形自走卷王】，来看看你的绝密报告？"
+      },
+      global_stats: {
+        total_days: 512,
+        total_hours: 3881.78,
+        total_sessions: 647,
+        first_booking: { date: "2022-09-12", seat_code: "A-045" },
+        is_low_frequency: false
+      },
+      spatial_stats: {
+        most_loved_seat: "芯灵驿站（十二楼） / Seat 366",
+        coverage_percent: 65,
+        seat_meme: "四楼钉子户",
+        favorite_seat_count: 86,
+        favorite_floor: "芯灵驿站（十二楼）",
+        visited_floor_count: 6,
+        favorite_floor_ratio: 33.4,
+        territory_roast: "你这不是找座位，是给全馆做压力测试。最后还是在【芯灵驿站（十二楼）】反复回档，主打一个又野又专一。",
+        floor_distribution: [
+          { rank: 1, name: "芯灵驿站（十二楼）", sessions: 216, hours: 1290, ratio: 33.4, level: 1 },
+          { rank: 2, name: "文学艺术书库（九楼）", sessions: 117, hours: 702, ratio: 18.1, level: 0.54 },
+          { rank: 3, name: "综合第一书库（十一楼）", sessions: 98, hours: 588, ratio: 15.1, level: 0.45 },
+          { rank: 4, name: "综合第二书库（十楼）", sessions: 70, hours: 420, ratio: 10.8, level: 0.32 },
+          { rank: 5, name: "自然科学第二书库（七楼）", sessions: 67, hours: 402, ratio: 10.4, level: 0.31 },
+          { rank: 6, name: "比特庭园（二楼西）", sessions: 14, hours: 84, ratio: 2.2, level: 0.06 }
+        ]
+      },
+      temporal_stats: {
+        peak_time: "21:30",
+        earliest_time: "06:32",
+        latest_time: "22:35",
+        yearly_comparison: [50, 120, 280, 62],
+        year_labels: ["大一", "大二", "大三", "大四"],
+        yearly_observations: [
+          { year: "2023", sessions: 50, hours: 320, active_days: 46, peak_month_label: "12月", peak_month_sessions: 18, peak_month_hours: 106, peak_month_ratio: 36, favorite_floor: "四楼", favorite_seat: "4F-W-023", roast: "考试周把你从普通用户临时升级成馆内常驻进程。" },
+          { year: "2024", sessions: 120, hours: 820, active_days: 94, peak_month_label: "3月", peak_month_sessions: 28, peak_month_hours: 188, peak_month_ratio: 23.3, favorite_floor: "比特庭园（二楼西）", favorite_seat: "Seat 406", roast: "开学没多久就进入状态，嘴上说随便学学，身体已经自动导航到图书馆。" },
+          { year: "2025", sessions: 280, hours: 1900, active_days: 188, peak_month_label: "6月", peak_month_sessions: 72, peak_month_hours: 460, peak_month_ratio: 25.7, favorite_floor: "芯灵驿站（十二楼）", favorite_seat: "Seat 366", roast: "考试周把你从普通用户临时升级成馆内常驻进程。" },
+          { year: "2026", sessions: 62, hours: 360, active_days: 48, peak_month_label: "6月", peak_month_sessions: 34, peak_month_hours: 210, peak_month_ratio: 54.8, favorite_floor: "芯灵驿站（十二楼）", favorite_seat: "Seat 366", roast: "这一年高度集中爆发，像是把全年 KPI 都塞进了一个月。" }
+        ],
+        monthly_heatmap: [
+          { year: "2023", months: [
+            { month: "01", sessions: 0, hours: 0, level: 0 }, { month: "02", sessions: 2, hours: 12, level: 0.03 }, { month: "03", sessions: 4, hours: 22, level: 0.06 }, { month: "04", sessions: 5, hours: 30, level: 0.07 }, { month: "05", sessions: 7, hours: 44, level: 0.1 }, { month: "06", sessions: 10, hours: 70, level: 0.14 }, { month: "07", sessions: 1, hours: 8, level: 0.01 }, { month: "08", sessions: 0, hours: 0, level: 0 }, { month: "09", sessions: 2, hours: 12, level: 0.03 }, { month: "10", sessions: 4, hours: 24, level: 0.06 }, { month: "11", sessions: 7, hours: 48, level: 0.1 }, { month: "12", sessions: 18, hours: 106, level: 0.25 }
+          ] },
+          { year: "2024", months: [
+            { month: "01", sessions: 8, hours: 50, level: 0.11 }, { month: "02", sessions: 4, hours: 26, level: 0.06 }, { month: "03", sessions: 28, hours: 188, level: 0.39 }, { month: "04", sessions: 18, hours: 122, level: 0.25 }, { month: "05", sessions: 10, hours: 70, level: 0.14 }, { month: "06", sessions: 17, hours: 110, level: 0.24 }, { month: "07", sessions: 3, hours: 24, level: 0.04 }, { month: "08", sessions: 2, hours: 16, level: 0.03 }, { month: "09", sessions: 9, hours: 62, level: 0.13 }, { month: "10", sessions: 7, hours: 50, level: 0.1 }, { month: "11", sessions: 6, hours: 42, level: 0.08 }, { month: "12", sessions: 8, hours: 60, level: 0.11 }
+          ] },
+          { year: "2025", months: [
+            { month: "01", sessions: 20, hours: 140, level: 0.28 }, { month: "02", sessions: 12, hours: 82, level: 0.17 }, { month: "03", sessions: 18, hours: 120, level: 0.25 }, { month: "04", sessions: 16, hours: 110, level: 0.22 }, { month: "05", sessions: 40, hours: 280, level: 0.56 }, { month: "06", sessions: 72, hours: 460, level: 1 }, { month: "07", sessions: 8, hours: 60, level: 0.11 }, { month: "08", sessions: 14, hours: 94, level: 0.19 }, { month: "09", sessions: 18, hours: 120, level: 0.25 }, { month: "10", sessions: 20, hours: 136, level: 0.28 }, { month: "11", sessions: 22, hours: 152, level: 0.31 }, { month: "12", sessions: 20, hours: 146, level: 0.28 }
+          ] },
+          { year: "2026", months: [
+            { month: "01", sessions: 4, hours: 24, level: 0.06 }, { month: "02", sessions: 2, hours: 12, level: 0.03 }, { month: "03", sessions: 5, hours: 34, level: 0.07 }, { month: "04", sessions: 6, hours: 40, level: 0.08 }, { month: "05", sessions: 11, hours: 40, level: 0.15 }, { month: "06", sessions: 34, hours: 210, level: 0.47 }, { month: "07", sessions: 0, hours: 0, level: 0 }, { month: "08", sessions: 0, hours: 0, level: 0 }, { month: "09", sessions: 0, hours: 0, level: 0 }, { month: "10", sessions: 0, hours: 0, level: 0 }, { month: "11", sessions: 0, hours: 0, level: 0 }, { month: "12", sessions: 0, hours: 0, level: 0 }
+          ] }
+        ],
+        top_months: [
+          { year: "2025", month: "06", label: "6月", sessions: 72, hours: 460, level: 1 },
+          { year: "2025", month: "05", label: "5月", sessions: 40, hours: 280, level: 0.56 },
+          { year: "2026", month: "06", label: "6月", sessions: 34, hours: 210, level: 0.47 },
+          { year: "2024", month: "03", label: "3月", sessions: 28, hours: 188, level: 0.39 },
+          { year: "2025", month: "11", label: "11月", sessions: 22, hours: 152, level: 0.31 }
+        ],
+        exam_pulse: {
+          alert_level: "红色预警",
+          copy: "期末季共 156 次预约，占全部记录 24.1%；最强波峰落在 2025.06，高频启动时间是 08:00。",
+          finals_sessions: 156,
+          finals_hours: 1040,
+          finals_ratio: 24.1,
+          active_days: 96,
+          early_sessions: 14,
+          late_sessions: 28,
+          peak_hour: "08:00",
+          hourly_distribution: [
+            { hour: 0, label: "00:00", sessions: 0, level: 0 },
+            { hour: 1, label: "01:00", sessions: 0, level: 0 },
+            { hour: 2, label: "02:00", sessions: 0, level: 0 },
+            { hour: 3, label: "03:00", sessions: 0, level: 0 },
+            { hour: 4, label: "04:00", sessions: 0, level: 0 },
+            { hour: 5, label: "05:00", sessions: 1, level: 0.04 },
+            { hour: 6, label: "06:00", sessions: 4, level: 0.15 },
+            { hour: 7, label: "07:00", sessions: 11, level: 0.42 },
+            { hour: 8, label: "08:00", sessions: 26, level: 1 },
+            { hour: 9, label: "09:00", sessions: 18, level: 0.69 },
+            { hour: 10, label: "10:00", sessions: 10, level: 0.38 },
+            { hour: 11, label: "11:00", sessions: 6, level: 0.23 },
+            { hour: 12, label: "12:00", sessions: 7, level: 0.27 },
+            { hour: 13, label: "13:00", sessions: 14, level: 0.54 },
+            { hour: 14, label: "14:00", sessions: 21, level: 0.81 },
+            { hour: 15, label: "15:00", sessions: 18, level: 0.69 },
+            { hour: 16, label: "16:00", sessions: 13, level: 0.5 },
+            { hour: 17, label: "17:00", sessions: 9, level: 0.35 },
+            { hour: 18, label: "18:00", sessions: 6, level: 0.23 },
+            { hour: 19, label: "19:00", sessions: 5, level: 0.19 },
+            { hour: 20, label: "20:00", sessions: 4, level: 0.15 },
+            { hour: 21, label: "21:00", sessions: 3, level: 0.12 },
+            { hour: 22, label: "22:00", sessions: 2, level: 0.08 },
+            { hour: 23, label: "23:00", sessions: 1, level: 0.04 }
+          ],
+          stress_months: [
+            { key: "2025-06", label: "2025.06", sessions: 72, hours: 460, active_days: 28, level: 1 },
+            { key: "2026-06", label: "2026.06", sessions: 34, hours: 210, active_days: 21, level: 0.47 },
+            { key: "2025-12", label: "2025.12", sessions: 20, hours: 146, active_days: 15, level: 0.28 },
+            { key: "2023-12", label: "2023.12", sessions: 18, hours: 106, active_days: 12, level: 0.25 }
+          ],
+          strongest_month: { key: "2025-06", label: "2025.06", sessions: 72, hours: 460, active_days: 28, level: 1 },
+          strongest_day: { date: "2025-06-12", sessions: 4, hours: 14 },
+          roast: "2025.06 这根尖峰很不客气：别人复习是临时抱佛脚，你更像直接把佛脚借走开了自习室。"
+        }
+      },
+      low_frequency_copy: "虽然你很少来，但你的同届卷王们还在默默发电。感谢你为他们腾出了宝贵的座位。也许你钟爱教室或宿舍，也许你度过了整个快乐的大学，作为真正的人生赢家，其中的酸甜苦辣咸麻辣鲜香只有你自己知道。"
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+    const slidesEl = $("#slides");
+    const loadingBar = $("#loadingBar");
+    const soundBtn = $("#soundBtn");
+    const autoBtn = $("#autoBtn");
+    const autoProgress = $("#autoProgress i");
+    const bgm = $("#bgm");
+    const trackLabel = $("#trackLabel");
+    const MUSIC_TRACKS = [];
+    const AUTO_INTERVAL_MS = 20000;
+    let slideNodes = [];
+    let activeIndex = 0;
+    let touchStartY = 0;
+    let lastWheelAt = 0;
+    let soundOn = true;
+    let autoPlayOn = true;
+    let autoStartedAt = 0;
+    let autoTimer = null;
+    let autoRaf = null;
+    let currentTrackIndex = 0;
+    let audioContext = null;
+    let ambientTimer = null;
+    let revealTimers = [];
+    let musicBlocked = false;
+    let hakimiState = {
+      started: false,
+      done: false,
+      promise: null,
+      controller: null,
+      text: ""
+    };
+
+    function getSummary() {
+      return memory.summary || {};
+    }
+
+    function getMeme() {
+      return memory.meme_stats || {};
+    }
+
+    function getGlobal() {
+      return memory.global_stats || {};
+    }
+
+    function getSpatial() {
+      return memory.spatial_stats || {};
+    }
+
+    function getTemporal() {
+      return memory.temporal_stats || {};
+    }
+
+    function getSemesterStats() {
+      return memory.semester_stats || {};
+    }
+
+    function text(value, fallback = "") {
+      return value === undefined || value === null || value === "" ? fallback : String(value);
+    }
+
+    function getStudentId() {
+      const profile = memory.user_profile || {};
+      return text(profile.student_id, memory.user).replace(/\s+/g, "");
+    }
+
+    function safe(value, fallback = "") {
+      return text(value, fallback).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function formatNumber(value, digits = 0) {
+      const number = Number(value || 0);
+      return number.toLocaleString("zh-CN", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      });
+    }
+
+    function getMainTitle() {
+      return text(getMeme().title, "图书馆记忆样本");
+    }
+
+    function hasExtraTag(name) {
+      return (getMeme().extra_tags || []).some((item) => text(item.name) === name);
+    }
+
+    function getExtraTagNames(limit = 3) {
+      return (getMeme().extra_tags || [])
+        .map((item) => text(item.name))
+        .filter(Boolean)
+        .slice(0, limit);
+    }
+
+    function labelLead(fallback = "图书馆记忆样本") {
+      const title = getMainTitle();
+      const tags = getExtraTagNames(2);
+      return `数据给你盖章：【${title}】${tags.length ? `，顺手叠上【${tags.join("】和【")}】` : `，${fallback}`}`;
+    }
+
+    function init() {
+      renderContent();
+      configureSlides();
+      bindEvents();
+      runPreload();
+      configureWeChatShare();
+    }
+
+    function renderContent() {
+      const summary = getSummary();
+      const meme = getMeme();
+      const global = getGlobal();
+      const spatial = getSpatial();
+      const temporal = getTemporal();
+      const profile = memory.user_profile || {};
+      const first = global.first_booking || {};
+      const firstDate = text(first.date, summary.firstVisit);
+      const firstSeat = text(first.seat_code, summary.favoriteSeat);
+
+      $("#firstCopy").textContent = `${firstDate}。你第一次走进图书馆，挑中了【${firstSeat}】；后来画像慢慢浮出水面：${labelLead("这一页不是普通回忆")}。`;
+      $("#softTruth").textContent = `表面上看，这是一个关于 ${formatNumber(summary.sessions)} 次预约、${formatNumber(summary.hours, 1)} 小时停留的温情故事；实际是在给【${getMainTitle()}】建档。`;
+      $("#sharpTruth").textContent = `【${getMainTitle()}】认证：${text(meme.sharp_evaluation, memory.story)}`;
+
+      $("#seatCopy").textContent = `${hasExtraTag("游牧学者") ? "这波属于【游牧学者】地图全开" : `空间画像判定为【${text(spatial.seat_meme, "空间样本")}】`}，行动半径 ${text(spatial.coverage_percent, 0)}%，去过 ${formatNumber(spatial.visited_floor_count || 0)} 个楼层/空间；主基地【${text(spatial.favorite_floor, summary.favoriteFloor)}】。`;
+      $("#seatMain").textContent = text(spatial.most_loved_seat, summary.favoriteSeat);
+      $("#seatMeta").textContent = `${formatNumber(spatial.favorite_seat_count || 0)} 次回到同一个座位，主楼层占比 ${formatNumber(spatial.favorite_floor_ratio || 0, 1)}%。`;
+      $("#seatBubble").textContent = text(spatial.territory_roast, `此座已被【${text(profile.name, "HDU 同学")}】重点标记。别人在换座位试手气，只有你是【${text(spatial.seat_meme, "座位纯爱战士")}】。`);
+      $("#seatSummaryCopy").textContent = `你不是只在一个角落打卡：这份清单记录了你去过的所有楼层/空间，以及每块地盘留下了多少次预约。`;
+      $("#seatSummaryRoast").textContent = `【${text(spatial.seat_meme, "领地样本")}】数据：足迹覆盖 ${formatNumber(spatial.coverage_percent || 0, 1)}%，最常回到【${text(spatial.most_loved_seat, summary.favoriteSeat)}】。锐评：嘴上说随便坐坐，身体已经把路线练成肌肉记忆。`;
+
+      const exam = temporal.exam_pulse || {};
+      const timeLabel = hasExtraTag("关灯侠") ? "关灯侠" : hasExtraTag("早八特种兵") ? "早八特种兵" : text(exam.alert_level, "时间样本");
+      $("#peakCopy").textContent = `时间线直接亮牌：【${timeLabel}】。${text(exam.copy, `最早 ${text(temporal.earliest_time, "--:--")} 出现，最晚 ${text(temporal.latest_time, "--:--")} 离场，高峰时段锁定 ${text(temporal.peak_time, "--:--")}。`)}`;
+      $("#peakRoast").textContent = text(exam.checkout_roast, "签退分布负责看你一天最后在什么时候离馆。");
+      $("#peakPulseCopy").textContent = `${hasExtraTag("期末补天选手") ? "【期末补天选手】单独点名：" : ""}签退线负责看一天怎么收尾，这一页专门把期末季最红的月份拎出来点名。`;
+      $("#peakPulseRoast").textContent = text(exam.month_roast, buildPeakCopy(meme.trend_type));
+      $("#examAlert").textContent = text(exam.alert_level, "观测中");
+      $("#examSessions").textContent = `${formatNumber(exam.finals_sessions || 0)} 次`;
+      $("#examHours").textContent = `${formatNumber(exam.finals_hours || 0, 1)}h`;
+      $("#curveRoast").textContent = buildCurveCopy(meme.trend_type, temporal.year_labels || [], temporal.yearly_comparison || []);
+      $("#defeatValue").dataset.target = text(meme.defeat_percentage, 0);
+
+      $("#lowCopy").textContent = text(memory.low_frequency_copy, "虽然你很少来，但你为其他人腾出了宝贵的座位。也许你钟爱教室或宿舍，也许你度过了整个快乐的大学，作为真正的人生赢家，其中的酸甜苦辣咸麻辣鲜香只有你自己知道。");
+      $("#lowSeats").textContent = formatNumber(Math.max(1, Number(summary.sessions || global.total_sessions || 0)));
+
+      $("#maskId").textContent = text(profile.student_id, memory.user);
+      $("#memeTitle").textContent = text(meme.title, "图书馆记忆样本");
+      $("#diagnosisText").textContent = text(meme.sharp_evaluation, memory.quote);
+      $("#extraTags").innerHTML = renderExtraTags(meme.extra_tags || []);
+      $("#liverIndex").textContent = `${Math.min(99, Math.max(1, Math.round(Number(summary.hours || global.total_hours || 0) / 40)))}%`;
+      $("#seatIndex").textContent = `${Math.min(99, Math.round(Number(spatial.coverage_percent || 0) * 1.1))}%`;
+      $("#nightIndex").textContent = Number(summary.hours || 0) > 1000 ? "MAX" : `${Math.max(1, Math.round(Number(summary.hours || 0) / 20))}`;
+      $("#mainSeat").textContent = text(spatial.most_loved_seat, summary.favoriteSeat);
+      $("#receiptHours").textContent = `${formatNumber(summary.hours || global.total_hours || 0, 1)}h`;
+      $("#shareLinkText").textContent = text(memory.public_share_url, "点击“保存并复制分享链接”后，会生成公开报告链接。");
+
+      renderTerritory();
+      renderEcgChart();
+      renderYearChart();
+      renderAnnualDossiers();
+      renderMonthHeatmap();
+      renderSemesterArchive();
+      renderCrossroads();
+      renderLeaderboard();
+      prepareRevealTargets();
+      startHakimiReview();
+    }
+
+    function buildPeakCopy(type) {
+      if (type === "nuwa") {
+        return "别人在岁月静好，你在期末周上演生死时速。史称：女娲补天。";
+      }
+      if (type === "high_to_low") {
+        return "前期火力很猛，后期主打一个精神稳定。曲线不骗你，它只是过于诚实。";
+      }
+      return "没有爆炸式冲刺，但胜在稳定。图书馆不怕你慢，只怕你真的不来。";
+    }
+
+    function buildCurveCopy(type, labels, values) {
+      const first = labels[0] || "起点";
+      const last = labels[labels.length - 1] || "终点";
+      const firstValue = values[0] || 0;
+      const lastValue = values[values.length - 1] || 0;
+
+      if (type === "high_to_low") {
+        return `${first}（${firstValue} 次）：我要拿国奖。${last}（${lastValue} 次）：只要能毕业就行。这是一条标准的放弃挣扎曲线。`;
+      }
+      if (type === "nuwa") {
+        return `${first} 还在试探，后来直接进入补天模式。你的学习曲线，像是被期末周亲自按了加速键。`;
+      }
+      return `这条曲线没有太多戏剧性，但它很真实：你一直在以自己的节奏输出。`;
+    }
+
+    function renderExtraTags(tags) {
+      if (!tags.length) {
+        return `<span class="tag-pill">附加标签：暂无明显偏科</span>`;
+      }
+      return tags
+        .map((item) => `<span class="tag-pill">${safe(item.name)} · ${safe(item.tag)}</span>`)
+        .join("");
+    }
+
+    function configureSlides() {
+      document.querySelectorAll(".slide").forEach((node) => node.classList.remove("hidden"));
+      document.querySelector("[data-slide='low']").classList.add("hidden");
+      slideNodes = Array.from(document.querySelectorAll(".slide:not(.hidden)"));
+      goTo(0, true);
+    }
+
+    function prepareRevealTargets() {
+      document.querySelectorAll("[data-reveal]").forEach((node) => node.removeAttribute("data-reveal"));
+      const selectors = [
+        "header > *",
+        ".guard",
+        ".loading-scene .kicker",
+        ".loading-scene .title",
+        ".progress",
+        ".truth-face > *",
+        ".territory-gauge",
+        ".territory-main",
+        ".bubble",
+        ".floor-row",
+        ".alert-card",
+        ".ecg-panel",
+        ".exam-pulse",
+        ".spotlight-card > *",
+        ".panel > .big-number",
+        ".panel > .copy",
+        ".chart-box",
+        ".curve-copy",
+        ".annual-card",
+        ".summary-tile",
+        ".heat-row",
+        ".top-month",
+        ".semester-card",
+        ".phase-note",
+        ".cross-card",
+        ".signal-card",
+        ".crossroad-verdict",
+        ".hakimi-status",
+        ".hakimi-stream",
+        ".hakimi-punchline",
+        ".hakimi-actions",
+        ".rank-row",
+        ".low-card > *",
+        ".barcode",
+        ".receipt-head",
+        ".receipt-stamp",
+        ".diagnosis",
+        ".tag-strip",
+        ".receipt-row",
+        ".receipt-actions",
+        ".share-link",
+        ".graduation-card img",
+        ".graduation-overlay > *"
+      ];
+
+      document.querySelectorAll(selectors.join(",")).forEach((node) => {
+        if (node.closest(".nav-arrow")) return;
+        node.setAttribute("data-reveal", "");
+      });
+
+      document.querySelectorAll(".title, .spot-number, .big-number, .receipt-stamp, .territory-gauge, .alert-card.is-level, .graduation-overlay h2").forEach((node) => {
+        node.classList.add("reveal-strong");
+      });
+    }
+
+    function bindEvents() {
+      window.addEventListener("wheel", (event) => {
+        const now = Date.now();
+        if (now - lastWheelAt < 680) return;
+        lastWheelAt = now;
+        if (event.deltaY > 12) goTo(activeIndex + 1);
+        if (event.deltaY < -12) goTo(activeIndex - 1);
+      }, { passive: true });
+
+      window.addEventListener("touchstart", (event) => {
+        touchStartY = event.touches[0].clientY;
+      }, { passive: true });
+
+      window.addEventListener("touchend", (event) => {
+        const delta = touchStartY - event.changedTouches[0].clientY;
+        if (Math.abs(delta) < 42) return;
+        goTo(activeIndex + (delta > 0 ? 1 : -1));
+      }, { passive: true });
+
+      window.addEventListener("keydown", (event) => {
+        if (["ArrowDown", "PageDown", " "].includes(event.key)) goTo(activeIndex + 1);
+        if (["ArrowUp", "PageUp"].includes(event.key)) goTo(activeIndex - 1);
+      });
+
+      window.addEventListener("resize", () => goTo(activeIndex, true));
+
+      $("#truthBtn").addEventListener("click", () => {
+        $("#truthCard").classList.add("is-revealed");
+        playStamp();
+      });
+
+      $("#posterBtn").addEventListener("click", downloadPoster);
+      $("#shareBtn").addEventListener("click", saveAndShareReport);
+      $("#hakimiRetry").addEventListener("click", () => startHakimiReview(true));
+      soundBtn.addEventListener("click", toggleSound);
+      trackLabel.addEventListener("click", nextTrack);
+      trackLabel.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        nextTrack();
+      });
+      autoBtn.addEventListener("click", toggleAutoPlay);
+      bgm.addEventListener("ended", nextTrack);
+      document.addEventListener("pointerdown", resumeMusicFromGesture, { passive: true });
+      document.addEventListener("keydown", resumeMusicFromGesture);
+      prepareMusic();
+    }
+
+    function goTo(index, immediate = false) {
+      if (!slideNodes.length) return;
+      const next = Math.max(0, Math.min(index, slideNodes.length - 1));
+      activeIndex = next;
+      cancelAutoTimer();
+      slidesEl.style.transitionDuration = immediate ? "0ms" : "640ms";
+      const frameHeight = $("#app").getBoundingClientRect().height;
+      slidesEl.style.transform = `translate3d(0, ${-next * frameHeight}px, 0)`;
+      slideNodes.forEach((node, idx) => node.classList.toggle("is-active", idx === next));
+      runSlideAnimations(slideNodes[next]);
+      playFlip();
+      runRevealSequence(slideNodes[next], immediate, resetAutoTimer);
+    }
+
+    function runPreload() {
+      let value = 0;
+      const timer = setInterval(() => {
+        value = Math.min(100, value + Math.round(8 + Math.random() * 14));
+        loadingBar.style.width = `${value}%`;
+        if (value >= 100) {
+          clearInterval(timer);
+          setTimeout(() => {
+            goTo(1);
+          }, 260);
+        }
+      }, 120);
+    }
+
+    function clearRevealTimers() {
+      revealTimers.forEach((timer) => clearTimeout(timer));
+      revealTimers = [];
+    }
+
+    function runRevealSequence(slide, immediate = false, onDone = () => {}) {
+      clearRevealTimers();
+      document.querySelectorAll(".slide").forEach((node) => {
+        node.classList.remove("reveal-done");
+        if (node !== slide) {
+          node.querySelectorAll("[data-reveal]").forEach((item) => item.classList.remove("is-revealed"));
+        }
+      });
+
+      const targets = Array.from(slide.querySelectorAll("[data-reveal]"));
+      targets.forEach((node) => node.classList.remove("is-revealed"));
+
+      if (immediate || !targets.length) {
+        targets.forEach((node) => node.classList.add("is-revealed"));
+        slide.classList.add("reveal-done");
+        onDone();
+        return;
+      }
+
+      targets.forEach((node, index) => {
+        const delay = 240 + index * 420;
+        const timer = setTimeout(() => {
+          node.classList.add("is-revealed");
+          if (index === targets.length - 1) {
+            const doneTimer = setTimeout(() => {
+              slide.classList.add("reveal-done");
+              onDone();
+            }, 1220);
+            revealTimers.push(doneTimer);
+          }
+        }, delay);
+        revealTimers.push(timer);
+      });
+    }
+
+    function cancelAutoTimer() {
+      if (autoTimer) clearTimeout(autoTimer);
+      if (autoRaf) cancelAnimationFrame(autoRaf);
+      autoTimer = null;
+      autoRaf = null;
+      autoProgress.style.width = "0%";
+    }
+
+    function resetAutoTimer() {
+      cancelAutoTimer();
+      autoBtn.textContent = autoPlayOn ? "Ⅱ" : "▶";
+      if (!autoPlayOn || activeIndex <= 0 || activeIndex >= slideNodes.length - 1) return;
+      autoStartedAt = performance.now();
+      autoTimer = setTimeout(() => {
+        if (autoPlayOn && activeIndex < slideNodes.length - 1) goTo(activeIndex + 1);
+      }, AUTO_INTERVAL_MS);
+      tickAutoProgress();
+    }
+
+    function tickAutoProgress() {
+      if (!autoPlayOn || activeIndex <= 0 || activeIndex >= slideNodes.length - 1) {
+        autoProgress.style.width = "0%";
+        return;
+      }
+      const progress = Math.min(1, (performance.now() - autoStartedAt) / AUTO_INTERVAL_MS);
+      autoProgress.style.width = `${progress * 100}%`;
+      if (progress < 1) autoRaf = requestAnimationFrame(tickAutoProgress);
+    }
+
+    function toggleAutoPlay() {
+      autoPlayOn = !autoPlayOn;
+      resetAutoTimer();
+    }
+
+    function runSlideAnimations(slide) {
+      if (!slide) return;
+      slide.querySelectorAll("[data-count]").forEach((node) => {
+        const target = Number(node.dataset.target || 0);
+        animateNumber(node, target, target % 1 ? 1 : 0);
+      });
+    }
+
+    function animateNumber(node, target, digits) {
+      const startTime = performance.now();
+      const duration = 1200;
+      const ease = (t) => 1 - Math.pow(1 - t, 3);
+
+      function tick(now) {
+        const progress = Math.min(1, (now - startTime) / duration);
+        node.textContent = formatNumber(target * ease(progress), digits);
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    function renderTerritory() {
+      const spatial = getSpatial();
+      const coverage = Math.max(0, Math.min(100, Number(spatial.coverage_percent || 0)));
+      const floors = spatial.floor_distribution && spatial.floor_distribution.length
+        ? spatial.floor_distribution
+        : (memory.floors || []);
+      const gauge = $("#territoryGauge");
+      const board = $("#floorBoard");
+      gauge.style.setProperty("--coverage", coverage);
+      $("#territoryCoverage").textContent = `${formatNumber(coverage)}%`;
+
+      if (!floors.length) {
+        board.innerHTML = `<div class="bubble">楼层样本不足，暂时无法生成占领报告。</div>`;
+        return;
+      }
+
+      const maxSessions = Math.max(...floors.map((item) => Number(item.sessions || 0)), 1);
+      board.innerHTML = floors
+        .map((floor, index) => {
+          const width = Math.max(4, (Number(floor.sessions || 0) / maxSessions) * 100);
+          const hours = Number(floor.hours || 0);
+          return `
+            <article class="floor-row ${index === 0 ? "is-top" : ""}" title="${safe(floor.name)}">
+              <div class="floor-rank">${index + 1}</div>
+              <div class="floor-body">
+                <div class="floor-head">
+                  <strong>${safe(floor.name)}</strong>
+                  <span>${formatNumber(floor.ratio || 0, 1)}%</span>
+                </div>
+                <div class="floor-track"><i style="width:${width}%"></i></div>
+                <div class="floor-foot">
+                  <span>${formatNumber(floor.sessions || 0)} 次</span>
+                  <span>${hours ? `${formatNumber(hours, 0)}h` : "有记录"}</span>
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join("");
+    }
+
+    function renderEcgChart() {
+      const exam = getTemporal().exam_pulse || {};
+      const slots = exam.checkout_hourly_distribution || exam.hourly_distribution || [];
+      const svg = $("#ecgChart");
+      const pulses = $("#examPulses");
+      if (!slots.length) {
+        svg.innerHTML = "";
+        pulses.innerHTML = `<div class="exam-pulse"><span>NO DATA</span><div class="exam-track"><i style="width:4%"></i></div><strong>0 次</strong></div>`;
+        return;
+      }
+
+      const width = 340;
+      const height = 170;
+      const padX = 22;
+      const padTop = 20;
+      const padBottom = 28;
+      const values = slots.map((item) => Number(item.sessions || 0));
+      const max = Math.max(...values, 1);
+      const points = slots.map((item, index) => {
+        const x = padX + (index * (width - padX * 2)) / Math.max(1, slots.length - 1);
+        const y = height - padBottom - (Number(item.sessions || 0) / max) * (height - padTop - padBottom);
+        return { x, y, value: Number(item.sessions || 0), label: item.label || `${index}:00` };
+      });
+      const peak = points.reduce((best, item) => item.value > best.value ? item : best, points[0]);
+      const areaPath = `${padX},${height - padBottom} ${points.map((item) => `${item.x},${item.y}`).join(" ")} ${width - padX},${height - padBottom}`;
+      const labelIndexes = new Set([0, 6, 12, 18, 23]);
+
+      svg.innerHTML = `
+        <line class="chart-axis" x1="${padX}" y1="${height - padBottom}" x2="${width - padX}" y2="${height - padBottom}"></line>
+        <polygon class="ecg-area" points="${areaPath}"></polygon>
+        <polyline class="chart-line" points="${points.map((item) => `${item.x},${item.y}`).join(" ")}"></polyline>
+        ${points.map((item, index) => labelIndexes.has(index) ? `
+          <text class="chart-label" x="${item.x}" y="${height - 8}" text-anchor="middle">${item.label.slice(0, 2)}</text>
+        ` : "").join("")}
+        <circle class="ecg-dot" cx="${peak.x}" cy="${peak.y}" r="4.5"></circle>
+        <text class="ecg-peak-label" x="${Math.min(width - 46, Math.max(38, peak.x))}" y="${Math.max(14, peak.y - 10)}" text-anchor="middle">签退 ${peak.label} / ${peak.value}次</text>
+      `;
+
+      const stressMonths = (exam.stress_months || []).slice(0, 4);
+      if (!stressMonths.length) {
+        pulses.innerHTML = `<div class="exam-pulse"><span>期末季</span><div class="exam-track"><i style="width:4%"></i></div><strong>样本少</strong></div>`;
+        return;
+      }
+
+      const maxSessions = Math.max(...stressMonths.map((item) => Number(item.sessions || 0)), 1);
+      pulses.innerHTML = stressMonths
+        .map((item) => `
+          <div class="exam-pulse" title="${safe(item.label)}: ${formatNumber(item.sessions || 0)} 次 / ${formatNumber(item.hours || 0, 1)}h">
+            <span>${safe(item.label)}</span>
+            <div class="exam-track"><i style="width:${Math.max(4, (Number(item.sessions || 0) / maxSessions) * 100)}%"></i></div>
+            <strong>${formatNumber(item.sessions || 0)} 次</strong>
+          </div>
+        `)
+        .join("");
+    }
+
+    function renderYearChart() {
+      const temporal = getTemporal();
+      const values = (temporal.yearly_comparison || []).map(Number);
+      const labels = temporal.year_labels || values.map((_, index) => `Y${index + 1}`);
+      renderLineChart($("#yearChart"), values, labels, "#b2211d", false);
+    }
+
+    function renderAnnualDossiers() {
+      const temporal = getTemporal();
+      const observations = temporal.yearly_observations || [];
+      const list = $("#annualList");
+      if (!observations.length) {
+        $("#annualIntro").textContent = "有效年度数据不足，暂时无法生成年度案卷。";
+        list.innerHTML = "";
+        return;
+      }
+
+      const strongest = [...observations].sort((a, b) => b.peak_month_sessions - a.peak_month_sessions)[0];
+      $("#annualIntro").textContent = `${labelLead("年度曲线开始说实话")}。重点观察：${strongest.year} 年 ${strongest.peak_month_label} 最离谱，单月 ${strongest.peak_month_sessions} 次预约，像是把图书馆当成第二张课表。`;
+      $("#annualSpotYear").textContent = `${strongest.year} / ${strongest.peak_month_label}`;
+      $("#annualSpotSessions").textContent = formatNumber(strongest.peak_month_sessions || 0);
+      $("#annualSpotTitle").textContent = `${strongest.peak_month_label} 冲到全年峰值`;
+      $("#annualSpotCopy").textContent = `${formatNumber(strongest.peak_month_hours || 0, 1)} 小时，占全年 ${formatNumber(strongest.peak_month_ratio || 0, 1)}%。${text(strongest.roast, "这个月的图书馆记录明显开始发烫。")}`;
+
+      list.innerHTML = observations
+        .map((item) => `
+          <article class="annual-card">
+            <div class="annual-year">${item.year}</div>
+            <div class="annual-main">
+              <strong>${item.peak_month_label} 冲到全年峰值</strong>
+              <div class="mono">${formatNumber(item.peak_month_sessions)} 次 / ${formatNumber(item.peak_month_hours, 1)}h / 占全年 ${formatNumber(item.peak_month_ratio, 1)}%</div>
+              <div class="annual-meter"><i style="width:${Math.min(100, Number(item.peak_month_ratio || 0) * 1.6)}%"></i></div>
+              <p>${item.roast}</p>
+            </div>
+          </article>
+        `)
+        .join("");
+    }
+
+    function renderMonthHeatmap() {
+      const temporal = getTemporal();
+      const heatmap = temporal.monthly_heatmap || [];
+      const topMonths = temporal.top_months || [];
+      const wall = $("#monthWall");
+      const top = $("#topMonths");
+      if (!heatmap.length) {
+        $("#heatmapIntro").textContent = "月份样本不足，热力墙暂时空白。";
+        wall.innerHTML = "";
+        top.innerHTML = "";
+        return;
+      }
+
+      const champion = topMonths[0];
+      $("#heatmapIntro").textContent = champion
+        ? `【${getMainTitle()}】的红温月份：${champion.year} 年 ${champion.label}，${champion.sessions} 次预约、${formatNumber(champion.hours, 1)} 小时。这个月不是学习，是驻扎。`
+        : "颜色越红，说明这个月越像图书馆常驻。";
+      if (champion) {
+        $("#heatChampionLabel").textContent = `${champion.year}.${champion.month}`;
+        $("#heatChampionSessions").textContent = formatNumber(champion.sessions || 0);
+        $("#heatChampionTitle").textContent = `${champion.label} 是你的图书馆红温月份`;
+        $("#heatChampionCopy").textContent = `${formatNumber(champion.hours || 0, 1)} 小时，活跃 ${formatNumber(champion.active_days || 0)} 天。这个月不是“去学习”，更像“回到基地”。`;
+      } else {
+        $("#heatChampionLabel").textContent = "NO CHAMPION";
+        $("#heatChampionSessions").textContent = "0";
+        $("#heatChampionTitle").textContent = "月份样本不足";
+        $("#heatChampionCopy").textContent = "暂时没有足够数据选出最红月份。";
+      }
+      $("#heatTopTiles").innerHTML = topMonths.slice(0, 4).map((item, index) => `
+        <div class="summary-tile">
+          <span>TOP ${index + 1} / ${safe(item.year)}.${safe(item.month)}</span>
+          <strong>${formatNumber(item.sessions || 0)} 次</strong>
+          <p>${formatNumber(item.hours || 0, 1)}h · ${formatNumber(item.active_days || 0)} 天</p>
+        </div>
+      `).join("");
+
+      wall.innerHTML = heatmap
+        .map((row) => `
+          <div class="heat-row">
+            <div class="heat-year">${row.year}</div>
+            ${(row.months || []).map((month) => `
+              <div class="heat-cell" title="${row.year}-${month.month}: ${month.sessions} 次 / ${formatNumber(month.hours, 1)}h" style="--level:${Number(month.level || 0)}">
+                <i></i><span>${Number(month.sessions || 0) || ""}</span>
+              </div>
+            `).join("")}
+          </div>
+        `)
+        .join("");
+
+      const maxSessions = Math.max(...topMonths.map((item) => Number(item.sessions || 0)), 1);
+      top.innerHTML = topMonths
+        .map((item) => `
+          <div class="top-month">
+            <span>${item.year}.${item.month}</span>
+            <div class="top-track"><i style="width:${(Number(item.sessions || 0) / maxSessions) * 100}%"></i></div>
+            <strong>${item.sessions} 次</strong>
+          </div>
+        `)
+        .join("");
+    }
+
+    function renderSemesterArchive() {
+      const stats = getSemesterStats();
+      const semesters = stats.semesters || [];
+      const grid = $("#semesterGrid");
+      if (!semesters.length) {
+        $("#semesterIntro").textContent = "有效学期样本不足，暂时无法生成八学期编年史。";
+        $("#semesterNote").textContent = "";
+        grid.innerHTML = "";
+        return;
+      }
+
+      const strongest = stats.strongest_semester || semesters
+        .filter((item) => Number(item.sessions || 0) > 0)
+        .sort((a, b) => Number(b.sessions || 0) - Number(a.sessions || 0))[0];
+      $("#semesterIntro").textContent = strongest
+        ? `学期档案已经亮牌：【${getMainTitle()}】。重点观察：${strongest.label} 最重，${strongest.sessions} 次预约、${formatNumber(strongest.hours, 1)} 小时，峰值在 ${strongest.peak_month_label}。`
+        : "把大学四年切成八段后，暂时没有特别突出的学期。";
+      $("#semesterNote").textContent = text(stats.archive_copy, "学期维度会把年度数据拆得更细，能看出哪一段真的开始加码。");
+      if (strongest) {
+        $("#semesterSpotLabel").textContent = text(strongest.phase_tag, "SEMESTER PEAK");
+        $("#semesterSpotSessions").textContent = formatNumber(strongest.sessions || 0);
+        $("#semesterSpotTitle").textContent = `${text(strongest.label)}：${text(strongest.peak_month_label)} 最突出`;
+        $("#semesterSpotCopy").textContent = `${formatNumber(strongest.hours || 0, 1)} 小时，活跃 ${formatNumber(strongest.active_days || 0)} 天。主战场：${text(strongest.favorite_floor, "未知楼层")}。`;
+      } else {
+        $("#semesterSpotLabel").textContent = "SEMESTER";
+        $("#semesterSpotSessions").textContent = "0";
+        $("#semesterSpotTitle").textContent = "有效学期样本不足";
+        $("#semesterSpotCopy").textContent = "暂时无法点名最重学期。";
+      }
+
+      const focusKeys = new Set(["grade3_spring", "grade4_autumn"]);
+      grid.innerHTML = semesters
+        .map((item) => {
+          const isEmpty = Number(item.sessions || 0) <= 0;
+          const isFocus = focusKeys.has(item.key);
+          return `
+            <article class="semester-card ${isFocus ? "is-crossroad" : ""} ${isEmpty ? "is-empty" : ""}">
+              <div class="semester-head">
+                <div>
+                  <div class="semester-label">${safe(item.label)}</div>
+                  <div class="mono" style="font-size:0.62rem;color:var(--muted);">${safe(item.calendar_label)}</div>
+                </div>
+                <span class="semester-tag">${safe(item.phase_tag)}</span>
+              </div>
+              <div class="semester-main">
+                <strong>${formatNumber(item.sessions)}</strong><span>次</span>
+                <strong>${formatNumber(item.hours, 0)}</strong><span>h</span>
+              </div>
+              <p>峰值 ${safe(item.peak_month_label)}；${safe(item.favorite_floor)}</p>
+            </article>
+          `;
+        })
+        .join("");
+    }
+
+    function renderCrossroads() {
+      const crossroads = getSemesterStats().crossroads || {};
+      const board = $("#crossroadBoard");
+      const left = crossroads.third_year_spring;
+      const right = crossroads.fourth_year_autumn;
+      const terms = [left, right].filter(Boolean);
+      $("#crossroadIntro").textContent = `${labelLead("关键岔路口也有画像")}。${text(crossroads.stage_copy, "这两段通常对应考研、就业、实习和毕业准备的压力叠加期。")}`;
+      $("#crossroadVerdict").textContent = text(crossroads.comparison_copy, "关键阶段样本不足，暂时无法生成对比结论。");
+
+      if (!terms.length) {
+        board.innerHTML = "";
+        return;
+      }
+
+      const termCards = terms.map((item) => `
+        <article class="cross-card">
+          <div class="cross-head">
+            <strong>${safe(item.label)} · ${safe(item.phase_tag)}</strong>
+            <span>${safe(item.peak_month_label)}</span>
+          </div>
+          <div class="cross-metrics">
+            <div><span>预约</span><strong>${formatNumber(item.sessions)} 次</strong></div>
+            <div><span>时长</span><strong>${formatNumber(item.hours, 1)}h</strong></div>
+            <div><span>活跃日</span><strong>${formatNumber(item.active_days)} 天</strong></div>
+          </div>
+          <p>${safe(item.roast)} 主战场：${safe(item.favorite_floor)}。</p>
+        </article>
+      `);
+
+      const signals = (crossroads.signal_cards || []).map((item) => `
+        <div class="signal-card">
+          <span>${safe(item.label)}</span>
+          <strong>${safe(item.value)}</strong>
+          <span>${safe(item.detail)}</span>
+        </div>
+      `);
+
+      board.innerHTML = termCards.join("");
+      $("#crossroadSummaryIntro").textContent = text(crossroads.stage_copy, "这两段通常对应考研、就业、实习和毕业准备的压力叠加期。");
+      $("#crossroadSummaryVerdict").textContent = text(crossroads.comparison_copy, "关键阶段样本不足，暂时无法生成对比结论。");
+      $("#crossroadSignals").innerHTML = (crossroads.signal_cards || []).map((item) => `
+        <div class="summary-tile">
+          <span>${safe(item.label)}</span>
+          <strong>${safe(item.value)}</strong>
+          <p>${safe(item.detail)}</p>
+        </div>
+      `).join("") || `<div class="summary-tile"><span>NO SIGNAL</span><strong>样本少</strong><p>暂时没有足够关键阶段信号。</p></div>`;
+    }
+
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    function buildHakimiFallbackText() {
+      const summary = getSummary();
+      const meme = getMeme();
+      const spatial = getSpatial();
+      const sessions = Number(summary.sessions || getGlobal().total_sessions || 0);
+      const hours = Number(summary.hours || getGlobal().total_hours || 0);
+      const title = text(meme.title, "图书馆记忆样本");
+      const seat = text(spatial.most_loved_seat, summary.favoriteSeat || "图书馆");
+      const tone = hours >= 1800 || sessions >= 350
+        ? "这份记录不是临时热血，是长期反复坐下来的稳定输出。你把图书馆过成了自己的第二个作息表。"
+        : sessions < 20
+          ? "你来得不多，但大学不只一种打开方式。也许教室、宿舍、实习和快乐生活，才是你的主战场。"
+          : "你不是最高频的那批人，但每一次到场都算数。大学四年的节奏，贵在真实。";
+      return `
+        <div class="hakimi-review">
+          <h3>哈基米评价</h3>
+          <p>${safe(tone)} 主标签是<strong>【${safe(title)}】</strong>，常回到<strong>【${safe(seat)}】</strong>，${formatNumber(sessions)} 次、${formatNumber(hours, 1)} 小时不是空口白话。</p>
+          <ul>
+            <li>累计预约：<strong>${formatNumber(sessions)} 次</strong></li>
+            <li>累计时长：<strong>${formatNumber(hours, 1)} 小时</strong></li>
+          </ul>
+          <p class="hakimi-blessing">无论这些时间多还是少，它们都已经成为你大学四年青春的一部分。毕业快乐，愿你带着这份认真奔向更辽阔的未来。</p>
+          <p class="hakimi-hit"><strong>一针见血：</strong>别解释，数据已经把你的图书馆人格写明白了。</p>
+        </div>
+      `;
+    }
+
+    function extractHakimiPunchline(content) {
+      const holder = document.createElement("div");
+      holder.innerHTML = sanitizeHakimiHtml(content, true);
+      const hit = holder.querySelector(".hakimi-hit");
+      if (hit && hit.textContent.trim()) {
+        return hit.textContent.replace(/^一针见血[：:\s]*/, "").trim();
+      }
+      const normalized = holder.textContent.trim();
+      const match = normalized.match(/一针见血[：:\s]*([\s\S]*)$/);
+      if (match && match[1].trim()) {
+        return match[1].replace(/^[:：\s]+/, "").trim();
+      }
+      const lines = normalized.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+      const sharpLine = [...lines].reverse().find((line) => /一针见血|不绕弯|锐评/.test(line));
+      return sharpLine ? sharpLine.replace(/^【?一针见血】?[：:\s]*/, "") : "别解释，数据已经把你的图书馆人格写明白了。";
+    }
+
+    function sanitizeHakimiHtml(html, keepPunchline = false) {
+      const template = document.createElement("template");
+      const source = text(html)
+        .replace(/```(?:html)?/gi, "")
+        .replace(/```/g, "")
+        .replace(/<(div|p|span|section)(class=)/gi, "<$1 $2")
+        .replace(/<(div|p|span|section)(id=)/gi, "<$1 $2");
+      template.innerHTML = source;
+      const allowedTags = new Set(["DIV", "P", "H3", "STRONG", "B", "EM", "UL", "OL", "LI", "BR", "SPAN"]);
+      const allowedClasses = new Set(["hakimi-review", "hakimi-hit", "hakimi-blessing"]);
+      template.content.querySelectorAll("*").forEach((node) => {
+        if (!allowedTags.has(node.tagName)) {
+          node.replaceWith(document.createTextNode(node.textContent || ""));
+          return;
+        }
+        Array.from(node.attributes).forEach((attr) => {
+          if (attr.name !== "class") node.removeAttribute(attr.name);
+        });
+        if (node.className) {
+          node.className = node.className
+            .split(/\s+/)
+            .filter((name) => allowedClasses.has(name))
+            .join(" ");
+        }
+      });
+      if (!keepPunchline) {
+        template.content.querySelectorAll(".hakimi-hit").forEach((node) => node.remove());
+      }
+      return template.innerHTML;
+    }
+
+    async function typeQueuedHtml(target, queueState, intervalMs = 64) {
+      let output = "";
+      while (!queueState.finished || queueState.queue.length) {
+        if (queueState.queue.length) {
+          const take = Math.min(5, queueState.queue.length);
+          output += queueState.queue.slice(0, take);
+          queueState.queue = queueState.queue.slice(take);
+          target.innerHTML = sanitizeHakimiHtml(output);
+          target.scrollTop = target.scrollHeight;
+        }
+        await sleep(intervalMs);
+      }
+      return output;
+    }
+
+    async function startHakimiReview(force = false) {
+      const streamBox = $("#hakimiStream");
+      const punchline = $("#hakimiPunchline");
+      const status = $("#hakimiStatus");
+      if (!streamBox || !punchline || !status) return;
+      if (hakimiState.started && !force) return hakimiState.promise;
+      if (hakimiState.controller) hakimiState.controller.abort();
+
+      hakimiState = {
+        started: true,
+        done: false,
+        promise: null,
+        controller: new AbortController(),
+        text: ""
+      };
+      streamBox.innerHTML = "";
+      punchline.textContent = "一针见血：正在等模型下刀。";
+      status.textContent = "正在连接大模型";
+
+      const queueState = { queue: "", finished: false };
+      const typingPromise = typeQueuedHtml(streamBox, queueState, 68);
+      hakimiState.promise = (async () => {
+        try {
+          const response = await fetch("/hakimi-review", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ report_data: memory }),
+            cache: "no-store",
+            signal: hakimiState.controller.signal
+          });
+          if (!response.ok || !response.body) throw new Error("hakimi review unavailable");
+          status.textContent = "模型正在评价";
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder("utf-8");
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            if (chunk) queueState.queue += chunk;
+          }
+          const tail = decoder.decode();
+          if (tail) queueState.queue += tail;
+        } catch (error) {
+          if (error.name === "AbortError") return "";
+          queueState.queue += buildHakimiFallbackText();
+          status.textContent = "本地评价已接管";
+        } finally {
+          queueState.finished = true;
+        }
+        const finalText = (await typingPromise).trim();
+        hakimiState.text = finalText;
+        hakimiState.done = true;
+        if (finalText) {
+          punchline.textContent = `一针见血：${extractHakimiPunchline(finalText)}`;
+          status.textContent = "评价完成";
+        }
+        syncInsertedReveal(streamBox.closest(".hakimi-panel"));
+        return finalText;
+      })();
+      return hakimiState.promise;
+    }
+
+    async function ensureHakimiReadyForExport() {
+      if (!hakimiState.started) startHakimiReview();
+      if (!hakimiState.done && hakimiState.promise) {
+        await Promise.race([hakimiState.promise, sleep(10000)]);
+      }
+      const streamBox = $("#hakimiStream");
+      const punchline = $("#hakimiPunchline");
+      if (!text(streamBox.textContent).trim()) {
+        const fallback = buildHakimiFallbackText();
+        streamBox.innerHTML = sanitizeHakimiHtml(fallback);
+        punchline.textContent = `一针见血：${extractHakimiPunchline(fallback)}`;
+        hakimiState.text = fallback;
+        hakimiState.done = true;
+      }
+    }
+
+    async function renderLeaderboard() {
+      const board = $("#rankBoard");
+      const currentId = getStudentId();
+      try {
+        const response = await fetch("/leaderboard.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("leaderboard unavailable");
+        const payload = await response.json();
+        const rows = Array.isArray(payload.rows) ? payload.rows : [];
+        const current = rows.find((item) => String(item.student_id) === currentId);
+        const visible = current && current.rank > 5
+          ? rows.slice(0, 4).concat(current)
+          : rows.slice(0, 5);
+        if (!visible.length) {
+          board.innerHTML = `
+            <div class="rank-row is-me" data-reveal>
+              <b>NEW</b>
+              <div><strong>${safe(currentId)}</strong><span>保存分享后，你会成为榜单第一批样本</span></div>
+              <em>${formatNumber(getSummary().hours || getGlobal().total_hours || 0, 1)}h</em>
+            </div>
+          `;
+          syncInsertedReveal(board);
+          return;
+        }
+        board.innerHTML = visible.map((item) => `
+          <div class="rank-row ${String(item.student_id) === currentId ? "is-me" : ""}" data-reveal>
+            <b>#${formatNumber(item.rank || 0)}</b>
+            <div><strong>${safe(item.display_id || item.student_id)}</strong><span>${safe(item.title)} · ${formatNumber(item.total_sessions || 0)} 次</span></div>
+            <em>${formatNumber(item.total_hours || 0, 1)}h</em>
+          </div>
+        `).join("");
+        syncInsertedReveal(board);
+      } catch (error) {
+        board.innerHTML = `
+          <div class="rank-row is-me" data-reveal>
+            <b>YOU</b>
+            <div><strong>${safe(currentId)}</strong><span>榜单暂时不可用，分享后服务器会记录总时长</span></div>
+            <em>${formatNumber(getSummary().hours || getGlobal().total_hours || 0, 1)}h</em>
+          </div>
+        `;
+        syncInsertedReveal(board);
+      }
+    }
+
+    function syncInsertedReveal(root) {
+      const slide = root.closest(".slide");
+      if (!slide || (!slide.classList.contains("is-active") && !slide.classList.contains("reveal-done"))) return;
+      root.querySelectorAll("[data-reveal]").forEach((node) => node.classList.add("is-revealed"));
+    }
+
+    function renderLineChart(svg, values, labels, color, dark) {
+      if (!values.length) {
+        svg.innerHTML = "";
+        return;
+      }
+      const max = Math.max(...values, 1);
+      const min = Math.min(...values, 0);
+      const width = 340;
+      const height = 220;
+      const pad = 28;
+      const points = values.map((value, index) => {
+        const x = pad + (index * (width - pad * 2)) / Math.max(1, values.length - 1);
+        const ratio = (value - min) / Math.max(1, max - min);
+        const y = height - pad - ratio * (height - pad * 2);
+        return `${x},${y}`;
+      });
+      const labelColor = dark ? "rgba(239,226,198,0.7)" : "rgba(34,27,20,0.62)";
+      const axisColor = dark ? "rgba(239,226,198,0.22)" : "rgba(34,27,20,0.18)";
+      svg.innerHTML = `
+        <line class="chart-axis" x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" style="stroke:${axisColor}"></line>
+        <polyline class="chart-line" points="${points.join(" ")}" style="stroke:${color}"></polyline>
+        ${values.map((value, index) => {
+          const [x, y] = points[index].split(",");
+          const label = labels[index] || "";
+          return `
+            <circle cx="${x}" cy="${y}" r="4" fill="${color}"></circle>
+            <text class="chart-label" x="${x}" y="${height - 8}" text-anchor="middle" style="fill:${labelColor}">${label.slice(-5)}</text>
+            <text class="chart-label" x="${x}" y="${Number(y) - 10}" text-anchor="middle" style="fill:${labelColor}">${formatNumber(value)}</text>
+          `;
+        }).join("")}
+      `;
+    }
+
+    function hashString(value) {
+      let hash = 0;
+      for (let i = 0; i < value.length; i += 1) {
+        hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
+      }
+      return hash;
+    }
+
+    function toggleSound() {
+      soundOn = !soundOn;
+      if (soundOn) {
+        playCurrentTrack();
+      } else {
+        bgm.pause();
+        musicBlocked = false;
+        updateMusicUi();
+      }
+    }
+
+    function prepareMusic() {
+      const seed = hashString(`${memory.user || ""}${memory.range || ""}`);
+      currentTrackIndex = MUSIC_TRACKS.length ? seed % MUSIC_TRACKS.length : 0;
+      loadTrack(currentTrackIndex);
+      updateMusicUi();
+      playCurrentTrack();
+    }
+
+    function loadTrack(index) {
+      if (!MUSIC_TRACKS.length) {
+        trackLabel.textContent = "无音乐";
+        return;
+      }
+      const track = MUSIC_TRACKS[index % MUSIC_TRACKS.length];
+      bgm.src = track.url;
+      bgm.volume = 0.42;
+      updateMusicUi(track.name);
+    }
+
+    function playCurrentTrack() {
+      if (!soundOn || !MUSIC_TRACKS.length) return;
+      if (!bgm.src) loadTrack(currentTrackIndex);
+      const playPromise = bgm.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise
+          .then(() => {
+            musicBlocked = false;
+            updateMusicUi();
+          })
+          .catch(() => {
+            musicBlocked = true;
+            updateMusicUi();
+          });
+      } else {
+        musicBlocked = false;
+        updateMusicUi();
+      }
+    }
+
+    function updateMusicUi(name) {
+      const track = MUSIC_TRACKS[currentTrackIndex % Math.max(1, MUSIC_TRACKS.length)];
+      const trackName = name || (track && track.name) || "背景音乐";
+      soundBtn.classList.toggle("is-playing", soundOn);
+      soundBtn.setAttribute("aria-pressed", soundOn ? "true" : "false");
+      trackLabel.textContent = soundOn
+        ? (musicBlocked ? `点击播放 / ${trackName}` : `♫ ${trackName}`)
+        : `已静音 / ${trackName}`;
+      trackLabel.title = "点击切换下一首";
+    }
+
+    function resumeMusicFromGesture() {
+      if (soundOn && (musicBlocked || bgm.paused)) {
+        playCurrentTrack();
+      }
+    }
+
+    function nextTrack(event) {
+      if (event && typeof event.stopPropagation === "function") {
+        event.stopPropagation();
+      }
+      if (!MUSIC_TRACKS.length) return;
+      currentTrackIndex = (currentTrackIndex + 1) % MUSIC_TRACKS.length;
+      musicBlocked = false;
+      loadTrack(currentTrackIndex);
+      if (soundOn) playCurrentTrack();
+    }
+
+    function ensureAudio() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playTone(frequency, duration, gain) {
+      if (!soundOn) return;
+      ensureAudio();
+      const oscillator = audioContext.createOscillator();
+      const volume = audioContext.createGain();
+      oscillator.frequency.value = frequency;
+      oscillator.type = "sine";
+      volume.gain.value = gain;
+      oscillator.connect(volume);
+      volume.connect(audioContext.destination);
+      oscillator.start();
+      volume.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+      oscillator.stop(audioContext.currentTime + duration);
+    }
+
+    function playFlip() {
+      playTone(440, 0.035, 0.02);
+    }
+
+    function playStamp() {
+      playTone(96, 0.12, 0.06);
+      setTimeout(() => playTone(176, 0.08, 0.04), 55);
+    }
+
+    function playShutter() {
+      playTone(900, 0.035, 0.035);
+      setTimeout(() => playTone(280, 0.05, 0.04), 42);
+    }
+
+    async function downloadPoster() {
+      playShutter();
+      $("#posterBtn").textContent = "正在逐页生成...";
+      await ensureHakimiReadyForExport();
+      if (window.htmlToImage && window.htmlToImage.toPng) {
+        try {
+          const images = await captureReportSlides();
+          const dataUrl = await stitchSlideImages(images);
+          triggerDownload(dataUrl, `hdu-library-memory-${getStudentId()}.png`);
+          $("#posterBtn").textContent = "生成长图";
+          return;
+        } catch (error) {
+          console.warn("long report export failed, fallback to receipt", error);
+        }
+      }
+      triggerDownload(drawPosterFallback(), `hdu-library-diagnosis-${getStudentId()}.png`);
+      $("#posterBtn").textContent = "生成长图";
+    }
+
+    async function captureReportSlides() {
+      const frame = $("#app");
+      const frameBox = frame.getBoundingClientRect();
+      const width = Math.round(frameBox.width || 390);
+      const height = Math.round(frameBox.height || 844);
+      const stage = document.createElement("section");
+      stage.className = "export-stage";
+      stage.style.width = `${width}px`;
+      document.body.appendChild(stage);
+
+      const images = [];
+      try {
+        for (const slide of slideNodes) {
+          stage.innerHTML = "";
+          const clone = createExportSlide(slide, width, height);
+          stage.appendChild(clone);
+          await waitForImages(stage);
+          await waitForPaint();
+          const dataUrl = await window.htmlToImage.toPng(clone, {
+            cacheBust: true,
+            pixelRatio: 1,
+            backgroundColor: "#201812"
+          });
+          const image = await loadImage(dataUrl);
+          images.push(image);
+        }
+      } finally {
+        stage.remove();
+      }
+
+      if (!images.length) throw new Error("没有可导出的页面");
+      return images;
+    }
+
+    function createExportSlide(slide, width, height) {
+      const clone = slide.cloneNode(true);
+      clone.classList.remove("hidden");
+      clone.classList.add("is-active", "reveal-done");
+      clone.style.height = `${height}px`;
+      clone.style.width = `${width}px`;
+      clone.style.minHeight = `${height}px`;
+      clone.style.transform = "none";
+      clone.querySelectorAll("[data-reveal]").forEach((node) => {
+        node.classList.add("is-revealed");
+      });
+      clone.querySelectorAll(".nav-arrow").forEach((node) => node.remove());
+      return clone;
+    }
+
+    function waitForPaint() {
+      return new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      });
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = reject;
+        image.src = src;
+      });
+    }
+
+    async function stitchSlideImages(images) {
+      const sourceWidth = Math.max(...images.map((image) => image.naturalWidth || image.width), 1);
+      const sourceHeight = images.reduce((sum, image) => sum + (image.naturalHeight || image.height), 0);
+      const maxOutputHeight = 12000;
+      const scale = Math.min(1, maxOutputHeight / Math.max(1, sourceHeight));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(sourceWidth * scale));
+      canvas.height = Math.max(1, Math.round(sourceHeight * scale));
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#201812";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      let y = 0;
+      for (const image of images) {
+        const imageWidth = image.naturalWidth || image.width;
+        const imageHeight = image.naturalHeight || image.height;
+        const targetHeight = Math.round(imageHeight * scale);
+        ctx.drawImage(image, 0, y, canvas.width, targetHeight);
+        y += targetHeight;
+      }
+
+      if (isCanvasMostlyBlank(canvas)) {
+        throw new Error("导出的长图内容为空，已阻止保存空白图");
+      }
+      return canvas.toDataURL("image/png");
+    }
+
+    function isCanvasMostlyBlank(canvas) {
+      const probe = document.createElement("canvas");
+      probe.width = Math.min(80, canvas.width);
+      probe.height = Math.min(800, canvas.height);
+      const probeCtx = probe.getContext("2d");
+      probeCtx.drawImage(canvas, 0, 0, probe.width, probe.height);
+      const data = probeCtx.getImageData(0, 0, probe.width, probe.height).data;
+      let varied = 0;
+      let bright = 0;
+      for (let i = 0; i < data.length; i += 16) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        if (Math.max(r, g, b) - Math.min(r, g, b) > 10) varied += 1;
+        if (r + g + b > 180) bright += 1;
+      }
+      const samples = data.length / 16;
+      return varied / samples < 0.02 && bright / samples < 0.02;
+    }
+
+    function waitForImages(root) {
+      const images = Array.from(root.querySelectorAll("img"));
+      return Promise.all(images.map((img) => {
+        if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+        return new Promise((resolve) => {
+          img.addEventListener("load", resolve, { once: true });
+          img.addEventListener("error", resolve, { once: true });
+        });
+      }));
+    }
+
+    function drawPosterFallback() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 900;
+      canvas.height = 1400;
+      const ctx = canvas.getContext("2d");
+      const meme = getMeme();
+      const summary = getSummary();
+      const spatial = getSpatial();
+      ctx.fillStyle = "#efe1c1";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#16120f";
+      ctx.font = "bold 44px Microsoft YaHei";
+      ctx.textAlign = "center";
+      ctx.fillText("HDU图书馆预约绝密诊断报告", 450, 120);
+      ctx.strokeStyle = "#b2211d";
+      ctx.lineWidth = 18;
+      ctx.strokeRect(180, 240, 540, 170);
+      ctx.fillStyle = "#b2211d";
+      ctx.font = "bold 62px Microsoft YaHei";
+      wrapCanvasText(ctx, text(meme.title, "图书馆记忆样本"), 450, 345, 520, 70);
+      ctx.fillStyle = "#16120f";
+      ctx.font = "bold 34px Microsoft YaHei";
+      wrapCanvasText(ctx, text(meme.sharp_evaluation, memory.quote), 450, 520, 720, 52);
+      ctx.font = "32px Consolas";
+      ctx.fillText(`总时长 ${formatNumber(summary.hours || 0, 1)}h`, 450, 880);
+      ctx.fillText(`主战场 ${text(spatial.most_loved_seat, summary.favoriteSeat)}`, 450, 940);
+      return canvas.toDataURL("image/png");
+    }
+
+    function wrapCanvasText(ctx, content, x, y, maxWidth, lineHeight) {
+      let line = "";
+      for (const char of content) {
+        const testLine = line + char;
+        if (ctx.measureText(testLine).width > maxWidth && line) {
+          ctx.fillText(line, x, y);
+          line = char;
+          y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      if (line) ctx.fillText(line, x, y);
+    }
+
+    function triggerDownload(dataUrl, filename = "library-memory-diagnosis.png") {
+      const link = document.createElement("a");
+      link.download = filename;
+      link.href = dataUrl;
+      link.click();
+    }
+
+    async function saveAndShareReport() {
+      const button = $("#shareBtn");
+      const oldText = button.textContent;
+      button.textContent = "正在保存...";
+      try {
+        const response = await fetch("/share-report", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            student_id: getStudentId(),
+            report_data: memory
+          })
+        });
+        const payload = await response.json();
+        if (!response.ok || !payload.ok) throw new Error(payload.error || "保存失败");
+        memory.public_share_url = payload.share_url;
+        $("#shareLinkText").textContent = payload.share_url;
+        const copied = await copyText(payload.share_url);
+        button.textContent = copied ? "链接已复制" : "已保存，链接见下方";
+        renderLeaderboard();
+        setTimeout(() => {
+          button.textContent = oldText;
+        }, 1800);
+      } catch (error) {
+        $("#shareLinkText").textContent = `保存失败：${error.message || error}`;
+        button.textContent = oldText;
+      }
+    }
+
+    async function copyText(content) {
+      try {
+        await navigator.clipboard.writeText(content);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function configureWeChatShare() {
+      const meme = getMeme();
+      if (!window.wx || !meme.share_title) return;
+      try {
+        window.wx.ready(() => {
+          const payload = {
+            title: meme.share_title,
+            desc: text(meme.sharp_evaluation, memory.quote),
+            link: text(memory.public_share_url, location.href),
+            imgUrl: ""
+          };
+          if (window.wx.updateAppMessageShareData) window.wx.updateAppMessageShareData(payload);
+          if (window.wx.updateTimelineShareData) window.wx.updateTimelineShareData(payload);
+        });
+      } catch (error) {
+        console.warn("WeChat share setup skipped", error);
+      }
+    }
+
+    init();
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+</body>
+</html>

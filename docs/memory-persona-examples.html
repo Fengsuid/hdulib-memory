@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>图书馆记忆盘点 · 用户画像样例看板</title>
+  <style>
+    :root {
+      --paper: #f4e6c9;
+      --ink: #211a14;
+      --muted: #6f604e;
+      --line: rgba(33, 26, 20, 0.16);
+      --red: #b2211d;
+      --amber: #d88421;
+      --green: #2f6b4f;
+      --blue: #245a7a;
+      --dark: #171310;
+      --soft: rgba(255, 255, 255, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(33, 26, 20, 0.045) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(33, 26, 20, 0.035) 1px, transparent 1px),
+        #211914;
+      background-size: 18px 18px, 24px 24px, auto;
+      font-family: "Segoe UI", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 22px 0 36px;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: end;
+      padding: 18px;
+      border: 1px solid rgba(244, 230, 201, 0.16);
+      border-radius: 8px;
+      color: #f3e5c8;
+      background: rgba(23, 19, 16, 0.92);
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: #ffb35a;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 0;
+      font-size: clamp(1.55rem, 3vw, 2.2rem);
+      line-height: 1.16;
+    }
+
+    .topbar p {
+      max-width: 680px;
+      margin: 12px 0 0;
+      color: rgba(244, 230, 201, 0.74);
+      line-height: 1.65;
+    }
+
+    .release-note {
+      min-width: 220px;
+      padding: 12px;
+      border: 1px solid rgba(255, 179, 90, 0.28);
+      border-radius: 8px;
+      background: rgba(255, 179, 90, 0.08);
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .sidebar,
+    .detail {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 249, 233, 0.82), rgba(222, 199, 158, 0.92)),
+        var(--paper);
+    }
+
+    .sidebar {
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .persona-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .persona-btn {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      width: 100%;
+      min-height: 56px;
+      padding: 10px 12px;
+      border: 1px solid rgba(33, 26, 20, 0.12);
+      border-radius: 8px;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.34);
+    }
+
+    .persona-btn.is-active {
+      border-color: rgba(178, 33, 29, 0.58);
+      background: rgba(178, 33, 29, 0.08);
+      box-shadow: inset 4px 0 0 var(--red);
+    }
+
+    .persona-btn strong {
+      display: block;
+      font-size: 0.92rem;
+    }
+
+    .persona-btn span {
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .badge {
+      padding: 4px 6px;
+      border: 1px solid rgba(178, 33, 29, 0.32);
+      border-radius: 6px;
+      color: var(--red);
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 0.68rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .detail {
+      min-width: 0;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    .detail-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail h2 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.3vw, 1.85rem);
+      line-height: 1.2;
+    }
+
+    .summary {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .score {
+      min-width: 154px;
+      padding: 12px;
+      border: 2px solid var(--red);
+      border-radius: 8px;
+      color: var(--red);
+      text-align: center;
+      transform: rotate(-2deg);
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .score strong {
+      display: block;
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+
+    .score span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      transform: rotate(2deg);
+    }
+
+    .section-title {
+      margin: 18px 0 10px;
+      font-size: 0.86rem;
+      font-weight: 900;
+      color: var(--red);
+    }
+
+    .rule-grid,
+    .metric-grid,
+    .flow-grid {
+      display: grid;
+      gap: 8px;
+    }
+
+    .rule-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .metric-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .rule,
+    .metric,
+    .flow,
+    .sample-card,
+    .future-card {
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid rgba(33, 26, 20, 0.14);
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .rule span,
+    .metric span,
+    .flow span,
+    .sample-card span,
+    .future-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .rule strong,
+    .metric strong,
+    .flow strong,
+    .sample-card strong,
+    .future-card strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.94rem;
+      line-height: 1.35;
+    }
+
+    .metric strong {
+      font-family: "Consolas", "SFMono-Regular", monospace;
+      font-size: 1.12rem;
+    }
+
+    .sample-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .sample-card {
+      min-height: 132px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sample-card.dark {
+      color: #f3e5c8;
+      background:
+        linear-gradient(180deg, rgba(35, 28, 22, 0.94), rgba(17, 15, 13, 0.98)),
+        var(--dark);
+      border-color: rgba(255, 179, 90, 0.22);
+    }
+
+    .sample-card.dark span {
+      color: rgba(244, 230, 201, 0.58);
+    }
+
+    .sample-card.dark p {
+      color: rgba(244, 230, 201, 0.78);
+    }
+
+    .sample-card p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.9rem;
+    }
+
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      margin: 0 6px 6px 0;
+      padding: 0 7px;
+      border: 1px solid rgba(178, 33, 29, 0.3);
+      border-radius: 6px;
+      color: var(--red);
+      background: rgba(178, 33, 29, 0.06);
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    .copy-box {
+      padding: 14px;
+      border-left: 4px solid var(--red);
+      border-radius: 0 8px 8px 0;
+      background: rgba(255, 255, 255, 0.32);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 1.1fr repeat(7, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.78rem;
+    }
+
+    .matrix div {
+      min-height: 38px;
+      display: grid;
+      align-items: center;
+      padding: 8px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .matrix div:nth-child(8n) {
+      border-right: 0;
+    }
+
+    .matrix .head {
+      color: #f3e5c8;
+      background: #211a14;
+      font-weight: 900;
+    }
+
+    .matrix .on {
+      color: var(--red);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .future {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .topbar,
+      .layout,
+      .detail-head {
+        grid-template-columns: 1fr;
+      }
+
+      .release-note,
+      .score {
+        min-width: 0;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      .persona-list {
+        display: flex;
+        max-width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .persona-btn {
+        min-width: 210px;
+      }
+
+      .rule-grid,
+      .metric-grid,
+      .sample-grid,
+      .future {
+        grid-template-columns: 1fr;
+      }
+
+      .matrix {
+        grid-template-columns: 1fr;
+      }
+
+      .matrix div {
+        border-right: 0;
+      }
+
+      .matrix .head:not(:first-child) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <p class="kicker">LIBRARY MEMORY PERSONA LAB</p>
+        <h1>图书馆“大学四年”用户画像与页面分流样例</h1>
+        <p>这份看板用于判断不同学生的主等级、额外标签和锐评尺度。真实上线时，所有用户展示同一套页面；主等级按总次数、总天数、总小时数必选，早八、关灯、座位纯爱、考研等作为额外标签叠加。</p>
+      </div>
+      <div class="release-note">
+        当前先做样例，不绑定真实账号。确认后再接入登录、同步、主等级判定、额外标签判定和生成链路。
+      </div>
+    </header>
+
+    <section class="detail" style="margin-top:14px;">
+      <p class="kicker">PRIMARY LEVELS</p>
+      <h2>必要主等级分档</h2>
+      <p class="summary">每个用户必须先落到一个主等级。低频阈值提高到少于 20 次；后续再根据时段、空间、期末、关键去向追加额外标签。</p>
+      <div class="future">
+        <div class="future-card">
+          <span>LEVEL 01</span>
+          <strong>图书馆云股东</strong>
+          <p class="summary">总预约 &lt; 20，或活跃天 &lt; 10，或总时长 &lt; 60h。</p>
+        </div>
+        <div class="future-card">
+          <span>LEVEL 02</span>
+          <strong>偶尔闪现型选手</strong>
+          <p class="summary">总预约 &lt; 60，或活跃天 &lt; 30，或总时长 &lt; 180h。</p>
+        </div>
+        <div class="future-card">
+          <span>LEVEL 03</span>
+          <strong>稳定在线型同学</strong>
+          <p class="summary">总预约 &lt; 150，或活跃天 &lt; 90，或总时长 &lt; 700h。</p>
+        </div>
+        <div class="future-card">
+          <span>LEVEL 04</span>
+          <strong>深度常驻型选手</strong>
+          <p class="summary">总预约 &lt; 350，或活跃天 &lt; 180，或总时长 &lt; 1800h。</p>
+        </div>
+        <div class="future-card">
+          <span>LEVEL 05</span>
+          <strong>高强度驻馆人</strong>
+          <p class="summary">总预约 &lt; 500，或活跃天 &lt; 260，或总时长 &lt; 3000h。</p>
+        </div>
+        <div class="future-card">
+          <span>LEVEL 06</span>
+          <strong>人形自走卷王</strong>
+          <p class="summary">总预约、活跃天、总时长全部进入最高档。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <aside class="sidebar">
+        <p class="kicker">PERSONAS</p>
+        <div class="persona-list" id="personaList"></div>
+      </aside>
+
+      <section class="detail">
+        <div class="detail-head">
+          <div>
+            <p class="kicker" id="personaKicker">PROFILE</p>
+            <h2 id="personaTitle"></h2>
+            <p class="summary" id="personaSummary"></p>
+          </div>
+          <div class="score">
+            <strong id="personaStamp"></strong>
+            <span id="personaTag"></span>
+          </div>
+        </div>
+
+        <p class="section-title">触发规则</p>
+        <div class="rule-grid" id="ruleGrid"></div>
+
+        <p class="section-title">样例数据</p>
+        <div class="metric-grid" id="metricGrid"></div>
+
+        <p class="section-title">推荐页面组合</p>
+        <div id="slideTags"></div>
+
+        <p class="section-title">样例页面</p>
+        <div class="sample-grid" id="sampleGrid"></div>
+
+        <p class="section-title">专属锐评</p>
+        <div class="copy-box" id="roastBox"></div>
+      </section>
+    </section>
+
+    <section class="detail" style="margin-top:14px;">
+      <p class="kicker">ROUTING MATRIX</p>
+      <h2>页面分流矩阵</h2>
+      <p class="summary">所有人展示同一套页面，但页面里的内容密度随数据自然变化。低频用户也看完整流程，主等级会标记为云股东；关键学期、早八、关灯、空间偏好等只作为额外标签叠加。</p>
+      <div class="matrix" id="routingMatrix"></div>
+    </section>
+
+    <section class="detail" style="margin-top:14px;">
+      <p class="kicker">NEXT RELEASE</p>
+      <h2>后续公开发布链路</h2>
+      <div class="future">
+        <div class="future-card">
+          <span>1 / 登录</span>
+          <strong>弹窗引导 HDU 统一身份认证</strong>
+          <p class="summary">优先走浏览器登录拿 Cookie，不在服务端保存明文密码。</p>
+        </div>
+        <div class="future-card">
+          <span>2 / 同步</span>
+          <strong>拉取所有预约分页</strong>
+          <p class="summary">同步有座预约和无座预约，避免只拿到前 10 条。</p>
+        </div>
+        <div class="future-card">
+          <span>3 / 聚合</span>
+          <strong>生成画像和页面分流</strong>
+          <p class="summary">按频次、时段、空间、学期、期末季、趋势曲线和关键去向节奏分配页面。</p>
+        </div>
+        <div class="future-card">
+          <span>4 / 分享</span>
+          <strong>生成 H5 和诊断海报</strong>
+          <p class="summary">海报使用小票/体检单样式，分享标题读取个人标签。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const pages = [
+      "首访反差页",
+      "楼层占领报告",
+      "期末周心电图",
+      "年度/月度热力墙",
+      "八学期编年史",
+      "大三下/大四上岔路口",
+      "诊断海报"
+    ];
+
+    const personas = [
+      {
+        id: "top",
+        name: "人形自走卷王",
+        tag: "肝帝本帝",
+        level: "TOP 5%",
+        summary: "这是主等级最高档。总次数、活跃天和总小时数都很高，额外标签再叠加空间、时段、期末等特征。",
+        rules: ["总预约 >= 500", "活跃天 >= 260", "总时长 >= 3000h"],
+        metrics: [["累计预约", "647 次"], ["总时长", "3881.8h"], ["击败全校", "99.5%"], ["最强月份", "2025.06"]],
+        slides: ["首访反差页", "楼层占领报告", "期末周心电图", "年度/月度热力墙", "八学期编年史", "大三下/大四上岔路口", "诊断海报"],
+        samples: [
+          ["总览页", "你不是来过图书馆，你是把图书馆当成了一个长期运行的后台进程。"],
+          ["期末周心电图", "149 次期末季预约，闭馆线附近出现 47 次。数据建议保安直接给你留门。"],
+          ["楼层占领报告", "10 个楼层都留下记录，最后还是反复回到主基地。又野又专一。"],
+          ["海报诊断", "核心诊断：人形自走卷王。临床表现：长期在线，疑似把自习当呼吸。"]
+        ],
+        roast: "你不是在图书馆，就是在去图书馆的路上。建议查查肝功能，或者直接把床搬来。"
+      },
+      {
+        id: "cloud",
+        name: "图书馆云股东",
+        tag: "赛博读书人",
+        level: "LOW 20%",
+        summary: "这是主等级最低档。少于 20 次直接归入云股东，同时也参考活跃天和总小时数。少去图书馆不等于大学不精彩。",
+        rules: ["总预约 < 20 直接归档", "或活跃天 < 10", "或总时长 < 60h"],
+        metrics: [["累计预约", "18 次"], ["总时长", "42h"], ["活跃天", "9 天"], ["主等级", "云股东"]],
+        slides: ["首访反差页", "楼层占领报告", "期末周心电图", "年度/月度热力墙", "八学期编年史", "大三下/大四上岔路口", "诊断海报"],
+        samples: [
+          ["降级页", "虽然你没怎么去过图书馆，但或许你钟爱教室或宿舍，或许你度过了整个快乐的大学，作为真正的人生赢家，其中的酸甜苦辣咸麻辣鲜香只有你自己知道。"],
+          ["大盘对比", "你的学习轨迹很轻，但你的贡献很重：降低馆内拥挤度。少来图书馆，也可能只是你有自己的主场。"],
+          ["海报诊断", "核心诊断：图书馆云股东。主要症状：精神上拥有图书馆，现实中可能拥有更快乐的大学。"],
+          ["分享标题", "经官方鉴定，我是赛博读书人。我的座位贡献属于反向慈善。"]
+        ],
+        roast: "四年了，图书馆大门朝哪你清楚吗？但也许你钟爱教室或宿舍，也许你度过了整个快乐的大学，作为真正的人生赢家，其中的酸甜苦辣咸麻辣鲜香只有你自己知道。"
+      },
+      {
+        id: "nuwa",
+        name: "期末补天选手",
+        tag: "临时高压锅",
+        level: "EXAM SPIKE",
+        summary: "平时一般，期末季突然尖峰。重点页面应该是心电图、月度热力墙和年度峰值，不要把它误判成全年稳定卷王。",
+        rules: ["期末季占比 >= 30%", "6月/12月/1月出现单月尖峰", "平时月份低于峰值月 50%"],
+        metrics: [["期末季占比", "38%"], ["最强波峰", "2025.06"], ["高峰时段", "12:00"], ["闭馆次数", "21 次"]],
+        slides: ["首访反差页", "期末周心电图", "年度/月度热力墙", "诊断海报"],
+        samples: [
+          ["期末周心电图", "波形突然抬头，不是心跳，是绩点在求救。"],
+          ["月度热力墙", "6 月红得像警报器，其他月份像在装无事发生。"],
+          ["年度案卷", "这一年不是长期主义，是把全年 KPI 塞进考试周。"],
+          ["海报诊断", "核心诊断：女娲补天型选手。补天材料：咖啡、打印纸和最后一周的命。"]
+        ],
+        roast: "别人在复习，你在抢修。考试周不是周期，是你的系统启动器。"
+      },
+      {
+        id: "morning",
+        name: "早八特种兵",
+        tag: "开馆冲锋队",
+        level: "MORNING",
+        summary: "早到特征明显。页面应该突出最早入馆、早晨时段分布、早起打卡连续性，文案走又狠又佩服的方向。",
+        rules: ["平均入馆 < 07:30", "早晨预约占比最高", "早到次数 >= 20"],
+        metrics: [["最早入馆", "06:32"], ["早晨占比", "46%"], ["早到次数", "58 次"], ["连续早到", "9 天"]],
+        slides: ["首访反差页", "期末周心电图", "八学期编年史", "诊断海报"],
+        samples: [
+          ["时段页", "别人还在梦里刷短视频，你已经在图书馆给一天开机。"],
+          ["早到记录", "06:32 出现，跟保安大爷共享第一缕灯光。"],
+          ["学期页", "早晨密度在大三下明显抬升，像是把焦虑改成了晨练。"],
+          ["海报诊断", "核心诊断：早八特种兵。临床表现：困，但先到。"]
+        ],
+        roast: "跟保安大爷一起开门，早起的人有虫吃，早起的你困得迷糊。"
+      },
+      {
+        id: "night",
+        name: "关灯侠",
+        tag: "闭馆大区经理",
+        level: "NIGHT",
+        summary: "晚离馆和闭馆线附近出现频繁。页面应该强调最后离场、闭馆次数和夜间心电图，适合生成强记忆点。",
+        rules: ["平均离馆 > 22:00", "闭馆线附近出现 >= 20 次", "晚上时段占比最高"],
+        metrics: [["最晚离馆", "22:35"], ["闭馆线次数", "47 次"], ["晚上占比", "39%"], ["主战场", "十二楼"]],
+        slides: ["楼层占领报告", "期末周心电图", "年度/月度热力墙", "诊断海报"],
+        samples: [
+          ["心电图", "22 点后还在出现，图书馆以为你是夜间运维。"],
+          ["闭馆记录", "《回家》这首闭馆名曲，你听得比 KFC 员工还熟。"],
+          ["楼层页", "主基地固定，撤退路线稳定，像是有自己的夜间巡逻表。"],
+          ["海报诊断", "核心诊断：闭馆大区经理。负责区域：灯灭前最后一排。"]
+        ],
+        roast: "保安看你的眼神都带着心疼：同学，今天也要我提醒你下班吗？"
+      },
+      {
+        id: "seat",
+        name: "座位纯爱战士",
+        tag: "固定据点守门员",
+        level: "LOYAL SEAT",
+        summary: "座位集中度很高。页面重点应从地图改成“主基地/座位占比/楼层占领”，强调专一和领地意识。",
+        rules: ["最爱座位占比 >= 20%", "最爱楼层占比 >= 35%", "常回同一座位 >= 60 次"],
+        metrics: [["最爱座位", "Seat 366"], ["回到同座", "86 次"], ["主楼层占比", "33.4%"], ["去过楼层", "10 个"]],
+        slides: ["楼层占领报告", "八学期编年史", "诊断海报"],
+        samples: [
+          ["领地页", "全馆都走过，最后还是回到同一个点。又野又专一。"],
+          ["座位页", "此座已被重点标记，别人找座靠运气，你像回自己工位。"],
+          ["楼层排行", "十二楼第一，九楼第二，十一楼第三。移动很自由，心很固定。"],
+          ["海报诊断", "核心诊断：座位纯爱战士。主要症状：看到空座先认亲。"]
+        ],
+        roast: "全馆那么多座位，你偏偏只爱这一个。建议给它上户口，顺便写进毕业论文致谢。"
+      },
+      {
+        id: "nomad",
+        name: "游牧学者",
+        tag: "空间管理大师",
+        level: "SPACE",
+        summary: "楼层覆盖很广，没有单一座位压倒性占比。页面重点是楼层占领报告和空间迁徙，不要强行写成座位专一。",
+        rules: ["覆盖率 >= 80%", "去过楼层 >= 7", "最爱座位占比 < 20%"],
+        metrics: [["覆盖率", "96%"], ["去过楼层", "10 个"], ["主楼层", "十二楼"], ["座位集中度", "13.3%"]],
+        slides: ["楼层占领报告", "年度/月度热力墙", "八学期编年史", "诊断海报"],
+        samples: [
+          ["楼层占领", "你不是找座位，是给全馆做压力测试。"],
+          ["空间迁徙", "从二楼到十二楼都留下过记录，WiFi 自动连接都被你连明白了。"],
+          ["月度页", "不同阶段换不同主战场，像是在图书馆跑开放世界。"],
+          ["海报诊断", "核心诊断：游牧学者。临床表现：哪里有空调哪里就是根据地。"]
+        ],
+        roast: "狡兔三窟你三百窟，全馆的 WiFi 自动连接都被你连明白了。"
+      },
+      {
+        id: "drop",
+        name: "放弃挣扎曲线",
+        tag: "与自己和解",
+        level: "HIGH TO LOW",
+        summary: "大一大二很猛，后期明显下滑。页面重点是四年曲线公开处刑，适合自黑，但不要写成失败叙事。",
+        rules: ["第一年 >= 最后一年 * 2", "趋势类型 high_to_low", "大四活跃度明显下降"],
+        metrics: [["大一", "128 次"], ["大四", "31 次"], ["下降幅度", "-75%"], ["最后阶段", "毕业优先"]],
+        slides: ["首访反差页", "大学四年曲线", "八学期编年史", "诊断海报"],
+        samples: [
+          ["四年曲线", "大一：我要拿国奖。大四：只要能毕业就行。"],
+          ["学期页", "前期像打了鸡血，后期像终于理解了人生不是只有绩点。"],
+          ["终章", "这不是摆烂，是在和真实的自己达成停火协议。"],
+          ["海报诊断", "核心诊断：放弃挣扎曲线。主要症状：成熟得很突然。"]
+        ],
+        roast: "曲线不骗你，它只是过于诚实。恭喜你，终于活成了真实的人类。"
+      },
+      {
+        id: "postgrad",
+        name: "考研冲刺型",
+        tag: "十二月决战单位",
+        level: "POSTGRAD",
+        summary: "大三下开始加压，大四上继续保持较长时间的高频到馆，并且强度能持续到当年 12 月。它不是短期尖峰，而是长期备战曲线。",
+        rules: ["大三下 + 大四上持续高频", "9-12 月都有明显记录，12 月仍未熄火", "连续活跃周 >= 10 或大四上活跃日 >= 70"],
+        metrics: [["大三下", "180 次"], ["9-12月", "持续在线"], ["12月预约", "32 次"], ["诊断", "考研冲刺"]],
+        slides: ["八学期编年史", "大三下/大四上岔路口", "期末周心电图", "年度/月度热力墙", "诊断海报"],
+        samples: [
+          ["岔路口页", "大三下开始蓄力，大四上没有明显掉线，一路撑到 12 月。这条曲线很像考研冲刺：不是突然热血，是持续把自己放进高压锅。"],
+          ["月份页", "9 月启动，10 月加码，11 月硬扛，12 月决战。图书馆记录不到你的准考证，但记录得到你的续航。"],
+          ["心电图", "期末季和考研节点叠在一起，波形不是心跳，是倒计时。"],
+          ["海报诊断", "核心诊断：十二月决战单位。临床表现：越接近年底，越像后台进程锁死。"]
+        ],
+        roast: "别人说准备考研是口头状态，你这像把 12 月写进了作息表。数据不能保证上岸，但能证明你真的下过水。"
+      },
+      {
+        id: "recommend",
+        name: "保研收口型",
+        tag: "十月尘埃落定",
+        level: "RECOMMEND",
+        summary: "大三下和大四开学初强度较高，但到 10 月前后明显收口。更像材料、面试、夏令营、预推免阶段的集中准备，而不是一直拖到 12 月的考研曲线。",
+        rules: ["3-9 月强度明显", "10 月后预约快速回落", "12 月无明显二次高峰"],
+        metrics: [["大三下", "150 次"], ["9月预约", "34 次"], ["10月后", "明显回落"], ["诊断", "保研收口"]],
+        slides: ["八学期编年史", "大三下/大四上岔路口", "年度/月度热力墙", "诊断海报"],
+        samples: [
+          ["岔路口页", "高压主要集中在大三下到大四开学初，10 月后开始收口。像是夏令营、预推免、材料和面试一起压过来，然后突然松了一口气。"],
+          ["月份页", "峰值不一定在 12 月，而是在 6-9 月这段前置战场。别人期末补天，你是在提前交卷。"],
+          ["学期页", "大四上不是没压力，是压力更早兑现。10 月之后曲线回落，像尘埃落定后的恢复出厂设置。"],
+          ["海报诊断", "核心诊断：十月尘埃落定。临床表现：前半程全速跑，后半程开始看别人冲刺。"]
+        ],
+        roast: "你不是不焦虑，你是焦虑得比较早。别人 12 月还在硬撑，你 10 月已经开始研究怎么优雅地松一口气。"
+      },
+      {
+        id: "jobhunt",
+        name: "找工作间歇型",
+        tag: "秋招多线程",
+        level: "JOB",
+        summary: "大四上可能很多月份都有记录，但不是长时间连续泡馆，而是间断性出现。它更像投简历、笔试、面试、改作品集之间穿插去图书馆补状态。",
+        rules: ["8-12 月多个月份零散出现", "连续活跃周不长，单月峰值不极端", "活跃日分散但不形成长期驻扎"],
+        metrics: [["覆盖月份", "8-12月"], ["最长连续", "6 天"], ["单月峰值", "18 次"], ["诊断", "求职间歇"]],
+        slides: ["八学期编年史", "大三下/大四上岔路口", "楼层占领报告", "诊断海报"],
+        samples: [
+          ["岔路口页", "大四上每隔一阵子出现一次，但没有形成长时间驻扎。很像秋招节奏：今天笔试，明天面试，后天回来图书馆修复精神状态。"],
+          ["月份页", "几个月都有痕迹，但每一段都不算特别长。不是没努力，是努力被简历、宣讲会、面试和消息通知切成了碎片。"],
+          ["学期页", "图书馆不再是唯一主线，更像多线程任务里的补给点。你来得间断，但每次都像现实把你推回来。"],
+          ["海报诊断", "核心诊断：秋招多线程。临床表现：简历在投，笔试在做，图书馆负责续命。"]
+        ],
+        roast: "你不是持续泡馆型，你是被秋招打断的间歇性自救。图书馆像充电宝，没电了就回来插一下。"
+      }
+    ];
+
+    const commonSlides = [
+      "首访反差页",
+      "楼层占领报告",
+      "期末周心电图",
+      "年度/月度热力墙",
+      "八学期编年史",
+      "大三下/大四上岔路口",
+      "诊断海报"
+    ];
+
+    personas.forEach((persona) => {
+      persona.slides = commonSlides;
+    });
+
+    const matrixRows = personas.map((persona) => ({
+      name: persona.name,
+      slides: persona.slides
+    }));
+
+    let activeIndex = 0;
+
+    function $(selector) {
+      return document.querySelector(selector);
+    }
+
+    function safe(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function renderList() {
+      $("#personaList").innerHTML = personas.map((persona, index) => `
+        <button class="persona-btn ${index === activeIndex ? "is-active" : ""}" data-index="${index}">
+          <span>
+            <strong>${safe(persona.name)}</strong>
+            <span>${safe(persona.tag)}</span>
+          </span>
+          <span class="badge">${safe(persona.level)}</span>
+        </button>
+      `).join("");
+
+      document.querySelectorAll(".persona-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          activeIndex = Number(button.dataset.index);
+          render();
+        });
+      });
+    }
+
+    function renderPersona() {
+      const persona = personas[activeIndex];
+      $("#personaKicker").textContent = `PROFILE / ${persona.id.toUpperCase()}`;
+      $("#personaTitle").textContent = persona.name;
+      $("#personaSummary").textContent = persona.summary;
+      $("#personaStamp").textContent = persona.name;
+      $("#personaTag").textContent = persona.tag;
+      $("#ruleGrid").innerHTML = persona.rules.map((rule, index) => `
+        <div class="rule"><span>RULE ${index + 1}</span><strong>${safe(rule)}</strong></div>
+      `).join("");
+      $("#metricGrid").innerHTML = persona.metrics.map(([label, value]) => `
+        <div class="metric"><span>${safe(label)}</span><strong>${safe(value)}</strong></div>
+      `).join("");
+      $("#slideTags").innerHTML = persona.slides.map((slide) => `
+        <span class="slide-tag">${safe(slide)}</span>
+      `).join("");
+      $("#sampleGrid").innerHTML = persona.samples.map(([title, copy], index) => `
+        <article class="sample-card ${index % 2 ? "dark" : ""}">
+          <span>PAGE SAMPLE</span>
+          <strong>${safe(title)}</strong>
+          <p>${safe(copy)}</p>
+        </article>
+      `).join("");
+      $("#roastBox").textContent = persona.roast;
+    }
+
+    function renderMatrix() {
+      const header = ["用户类型", "首访", "领地", "心电图", "热力墙", "学期", "岔路口", "海报"];
+      const keys = ["首访反差页", "楼层占领报告", "期末周心电图", "年度/月度热力墙", "八学期编年史", "大三下/大四上岔路口", "诊断海报"];
+      const cells = header.map((item) => `<div class="head">${safe(item)}</div>`);
+      matrixRows.forEach((row) => {
+        cells.push(`<div><strong>${safe(row.name)}</strong></div>`);
+        keys.forEach((key) => {
+          cells.push(`<div class="${row.slides.includes(key) ? "on" : ""}">${row.slides.includes(key) ? "启用" : "跳过"}</div>`);
+        });
+      });
+      $("#routingMatrix").innerHTML = cells.join("");
+    }
+
+    function render() {
+      renderList();
+      renderPersona();
+      renderMatrix();
+    }
+
+    render();
+  </script>
+</body>
+</html>
